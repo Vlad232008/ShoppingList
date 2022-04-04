@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ShoppingList</string>
+    <string name="settings">Настройки</string>
+    <string name="notes">Заметки</string>
+    <string name="shop_List">Список покупок</string>
+    <string name="new_Item">Новый элемент</string>
+</resources>
