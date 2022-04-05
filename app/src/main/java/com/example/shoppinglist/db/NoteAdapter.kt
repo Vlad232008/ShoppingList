@@ -10,7 +10,8 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.NoteListItemBinding
 import com.example.shoppinglist.entities.NoteItem
 
-class NoteAdapter(private val listener: Listener): ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
+class NoteAdapter(private val listener: Listener) :
+    ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
     }
@@ -19,25 +20,31 @@ class NoteAdapter(private val listener: Listener): ListAdapter<NoteItem, NoteAda
         holder.setData(getItem(position), listener)
     }
 
-    class ItemHolder (view: View): RecyclerView.ViewHolder(view) {
+    class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = NoteListItemBinding.bind(view)
-        fun setData(note: NoteItem, listener: Listener) = with(binding){
+        fun setData(note: NoteItem, listener: Listener) = with(binding) {
             tvTitle.text = note.title
             tvDescription.text = note.content
+            itemView.setOnClickListener{
+                listener.onClickItem(note)
+            }
             tvTime.text = note.time
-            imDelete.setOnClickListener{
+            imDelete.setOnClickListener {
                 listener.deleteItem(note.id!!)
             }
         }
-        companion object{
-            fun create (parent: ViewGroup):ItemHolder{
-                return ItemHolder(LayoutInflater.from(parent.context).
-                inflate(R.layout.note_list_item, parent, false))
+
+        companion object {
+            fun create(parent: ViewGroup): ItemHolder {
+                return ItemHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.note_list_item, parent, false)
+                )
             }
         }
     }
 
-    class ItemComparator:DiffUtil.ItemCallback<NoteItem>(){
+    class ItemComparator : DiffUtil.ItemCallback<NoteItem>() {
         override fun areItemsTheSame(oldItem: NoteItem, newItem: NoteItem): Boolean {
             return oldItem.id == newItem.id
         }
@@ -47,9 +54,9 @@ class NoteAdapter(private val listener: Listener): ListAdapter<NoteItem, NoteAda
         }
     }
 
-    interface Listener{
-        fun deleteItem(id: Int){
+    interface Listener {
+        fun deleteItem(id: Int)
+        fun onClickItem(note: NoteItem)
 
-        }
     }
 }
