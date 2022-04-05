@@ -12,6 +12,7 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
 import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.fragment.NoteFragment
+import com.example.shoppinglist.utils.HtmlManager
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,7 +41,7 @@ class NewNoteActivity : AppCompatActivity() {
 
     private fun fillNote()= with(binding){
           idTitle.setText(note?.title)
-          idDescription.setText(note?.title)
+          idDescription.setText(HtmlManager.getFromHtml(note?.content!!).trim())
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.id_save) {
@@ -92,7 +93,8 @@ class NewNoteActivity : AppCompatActivity() {
 
     private fun updateNote(): NoteItem? = with(binding){
         note?.copy(title = idTitle.text.toString(),
-        content = idDescription.text.toString())
+        content = HtmlManager.toHtml(idDescription.text)
+        )
     }
 
     private fun actionBarSetting() {
@@ -120,7 +122,7 @@ class NewNoteActivity : AppCompatActivity() {
         return NoteItem(
             null,
             binding.idTitle.text.toString(),
-            binding.idDescription.text.toString(),
+            HtmlManager.toHtml(binding.idDescription.text),
             getCurrentTime(),
             ""
         )
