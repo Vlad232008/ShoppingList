@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityMainBinding
+import com.example.shoppinglist.fragment.FragmentManager
+import com.example.shoppinglist.fragment.NoteFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -16,18 +18,18 @@ class MainActivity : AppCompatActivity() {
     }
     private fun setBottomNavListener(){
         binding.bNav.setOnItemSelectedListener {
-            when(it.itemId){
+            when(it.itemId) {
                 R.id.settings->{
                     Log.d("MyLog","Settings")
                 }
                 R.id.notes->{
-                    Log.d("MyLog","Notes")
+                    FragmentManager.setFragment(NoteFragment.newInstance(), this)
                 }
                 R.id.shoplist->{
                     Log.d("MyLog","ShopList")
                 }
                 R.id.newItem->{
-                    Log.d("MyLog","NewItem")
+                    FragmentManager.currentFrag?.onClickNew()
                 }
             }
             true

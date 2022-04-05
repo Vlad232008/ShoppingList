@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">ShoppingList</string>
+    <string name="app_name">Мои записи</string>
     <string name="settings">Настройки</string>
     <string name="notes">Заметки</string>
     <string name="shop_List">Список покупок</string>
     <string name="new_Item">Новый элемент</string>
+    <string name="title_hint">Тема</string>
+    <string name="description_hint">Описание</string>
+
 </resources>
