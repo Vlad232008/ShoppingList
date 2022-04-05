@@ -1,8 +1,11 @@
 package com.example.shoppinglist.activities
 
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.style.StyleSpan
 import android.view.Menu
 import android.view.MenuItem
 import com.example.shoppinglist.R
@@ -45,8 +48,28 @@ class NewNoteActivity : AppCompatActivity() {
         } else if (item.itemId == android.R.id.home) {
             finish()
         }
+        else if (item.itemId == R.id.id_bold) {
+            setBoldForceSelectedText()
+        }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setBoldForceSelectedText() = with(binding) {
+        val startPos = idDescription.selectionStart
+        val endPos = idDescription.selectionEnd
+
+        val styles = idDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
+        var boldStyle: StyleSpan? = null
+        if (styles.isNotEmpty()){
+            idDescription.text.removeSpan(styles[0])
+        }
+        else {
+            boldStyle = StyleSpan(Typeface.BOLD)
+        }
+        idDescription.text.setSpan(boldStyle, startPos,endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        idDescription.text.trim()
+        idDescription.setSelection(startPos)
     }
 
     private fun updateNote(): NoteItem? = with(binding){
