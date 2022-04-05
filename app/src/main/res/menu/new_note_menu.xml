@@ -4,13 +4,13 @@
     <item
         android:id="@+id/id_save"
         android:icon="@drawable/ic_baseline_save_24"
-        android:orderInCategory="1"
+        android:orderInCategory="2"
         android:title="Save"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/id_bold"
         android:icon="@drawable/ic_baseline_format_bold_24"
-        android:title="Bold"
-        app:showAsAction="ifRoom" />
+        android:title="Жирный шрифт"
+        android:orderInCategory="1" />
 </menu>

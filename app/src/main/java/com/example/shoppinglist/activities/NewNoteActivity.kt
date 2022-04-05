@@ -27,11 +27,7 @@ class NewNoteActivity : AppCompatActivity() {
         getNote()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.new_note_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-    private fun getNote(){
+    private fun getNote() {
         val sNote = intent.getSerializableExtra(NoteFragment.NEW_NOTE_KEY)
         if (sNote != null) {
             note = sNote as NoteItem
@@ -39,17 +35,22 @@ class NewNoteActivity : AppCompatActivity() {
         }
     }
 
-    private fun fillNote()= with(binding){
-          idTitle.setText(note?.title)
-          idDescription.setText(HtmlManager.getFromHtml(note?.content!!).trim())
+    private fun fillNote() = with(binding) {
+        idTitle.setText(note?.title)
+        idDescription.setText(HtmlManager.getFromHtml(note?.content!!).trim())
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.new_note_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.id_save) {
-                setMainResult()
+            setMainResult()
         } else if (item.itemId == android.R.id.home) {
             finish()
-        }
-        else if (item.itemId == R.id.id_bold) {
+        } else if (item.itemId == R.id.id_bold) {
             setBoldForceSelectedText()
         }
         return super.onOptionsItemSelected(item)
@@ -61,19 +62,20 @@ class NewNoteActivity : AppCompatActivity() {
 
         val styles = idDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
         var boldStyle: StyleSpan? = null
-        if (styles.isNotEmpty()){
+        if (styles.isNotEmpty()) {
             idDescription.text.removeSpan(styles[0])
-        }
-        else {
+        } else {
             boldStyle = StyleSpan(Typeface.BOLD)
+            idDescription.text.setSpan(boldStyle, startPos, endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            idDescription.text.trim()
+            idDescription.setSelection(startPos)
         }
-        idDescription.text.setSpan(boldStyle, startPos,endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        idDescription.text.trim()
-        idDescription.setSelection(startPos)
     }
-    private fun updateNote(): NoteItem? = with(binding){
-        note?.copy(title = idTitle.text.toString(),
-        content = HtmlManager.toHtml(idDescription.text).trim()
+
+    private fun updateNote(): NoteItem? = with(binding) {
+        note?.copy(
+            title = idTitle.text.toString(),
+            content = HtmlManager.toHtml(idDescription.text).trim()
         )
     }
 
@@ -84,7 +86,7 @@ class NewNoteActivity : AppCompatActivity() {
 
     private fun setMainResult() {
         var editState = "new"
-        val tempNote: NoteItem? = if (note == null){
+        val tempNote: NoteItem? = if (note == null) {
             createNewNote()
         } else {
             editState = "update"
