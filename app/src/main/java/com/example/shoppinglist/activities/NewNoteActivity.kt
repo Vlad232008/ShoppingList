@@ -28,24 +28,30 @@ class NewNoteActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
     private fun getNote(){
-        note = intent.getSerializableExtra(NoteFragment.NEW_NOTE_KEY) as NoteItem
-        fillNote()
+        val sNote = intent.getSerializableExtra(NoteFragment.NEW_NOTE_KEY)
+        if (sNote != null) {
+            note = sNote as NoteItem
+            fillNote()
+        }
     }
 
     private fun fillNote()= with(binding){
-        if(note != null) {
           idTitle.setText(note?.title)
           idDescription.setText(note?.title)
-        }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.id_save) {
-            setMainResult()
+                setMainResult()
         } else if (item.itemId == android.R.id.home) {
             finish()
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateNote(): NoteItem? = with(binding){
+        note?.copy(title = idTitle.text.toString(),
+        content = idDescription.text.toString())
     }
 
     private fun actionBarSetting() {
@@ -54,8 +60,16 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
     private fun setMainResult() {
+        var editState = "new"
+        val tempNote: NoteItem? = if (note == null){
+            createNewNote()
+        } else {
+            editState = "update"
+            updateNote()
+        }
         val i = Intent().apply {
-            putExtra(NoteFragment.NEW_NOTE_KEY, createNewNote())
+            putExtra(NoteFragment.NEW_NOTE_KEY, tempNote)
+            putExtra(NoteFragment.EDIT_STATE_KEY, editState)
         }
         setResult(RESULT_OK, i)
         finish()
