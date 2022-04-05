@@ -34,7 +34,7 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:textColorHint="@color/black"
-                android:textStyle="bold"
+                android:textStyle="normal|bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

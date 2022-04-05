@@ -51,7 +51,9 @@ class NewNoteActivity : AppCompatActivity() {
         else if (item.itemId == R.id.id_bold) {
             setBoldForceSelectedText()
         }
-
+        else if (item.itemId == R.id.id_italic) {
+            setItalicForceSelectedText()
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -68,6 +70,22 @@ class NewNoteActivity : AppCompatActivity() {
             boldStyle = StyleSpan(Typeface.BOLD)
         }
         idDescription.text.setSpan(boldStyle, startPos,endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        idDescription.text.trim()
+        idDescription.setSelection(startPos)
+    }
+    private fun setItalicForceSelectedText() = with(binding) {
+        val startPos = idDescription.selectionStart
+        val endPos = idDescription.selectionEnd
+
+        val styles = idDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
+        var italicStyle: StyleSpan? = null
+        if (styles.isNotEmpty()){
+            idDescription.text.removeSpan(styles[0])
+        }
+        else {
+            italicStyle = StyleSpan(Typeface.ITALIC)
+        }
+        idDescription.text.setSpan(italicStyle, startPos,endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         idDescription.text.trim()
         idDescription.setSelection(startPos)
     }
