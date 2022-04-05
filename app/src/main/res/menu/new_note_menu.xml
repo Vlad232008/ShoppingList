@@ -13,9 +13,4 @@
         android:icon="@drawable/ic_baseline_format_bold_24"
         android:title="Bold"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/id_italic"
-        android:icon="@drawable/ic_baseline_format_italic_24"
-        android:title="italic"
-        app:showAsAction="ifRoom" />
 </menu>
