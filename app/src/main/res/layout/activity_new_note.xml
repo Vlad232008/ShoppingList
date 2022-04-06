@@ -137,7 +137,6 @@
                     android:padding="3dp"
                     app:srcCompat="@color/picker_black" />
             </TableRow>
-
         </TableLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
