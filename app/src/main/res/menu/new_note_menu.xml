@@ -10,12 +10,14 @@
 
     <item
         android:id="@+id/id_bold"
-        android:icon="@drawable/ic_baseline_format_bold_24"
         android:title="Жирный шрифт"
-        android:orderInCategory="1" />
+        android:orderInCategory="1"/>
     <item
         android:id="@+id/id_italic"
-        android:icon="@drawable/ic_baseline_format_italic_24"
         android:title="Курсив"
-        android:orderInCategory="1" />
+        android:orderInCategory="2"/>
+    <item
+        android:id="@+id/id_color"
+        android:title="Панель инструментов"
+        android:orderInCategory="3"/>
 </menu>
