@@ -28,6 +28,11 @@ class NewNoteActivity : AppCompatActivity() {
         setContentView(binding.root)
         actionBarSetting()
         getNote()
+        binding.ibColor.setOnClickListener {
+            if (binding.colorPicker.visibility == View.VISIBLE) {
+                closeColorPicker()
+            } else openColorPicker()
+        }
     }
 
     private fun getNote() {
@@ -62,124 +67,146 @@ class NewNoteActivity : AppCompatActivity() {
             R.id.id_italic -> {
                 setItalicForceSelectedText()
             }
-            R.id.id_color -> {
-                if (binding.colorPicker.visibility == View.VISIBLE) {
-                    closeColorPicker()
-                } else openColorPicker()
+            R.id.id_control_panel -> {
+                if (binding.actionMenu.visibility == View.VISIBLE) {
+                    closeActionMenu()
+                } else openActionMenu()
             }
         }
         return super.onOptionsItemSelected(item)
     }
-        private fun setBoldForceSelectedText() = with(binding) {
-            val startPos = idDescription.selectionStart
-            val endPos   = idDescription.selectionEnd
 
-            val styles = idDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
-            var boldStyle: StyleSpan? = null
-            if (styles.isNotEmpty()) {
-                idDescription.text.removeSpan(styles[0])
-            } else {
-                boldStyle = StyleSpan(Typeface.BOLD)
-                idDescription.text.setSpan(
-                    boldStyle,
-                    startPos,
-                    endPos,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                idDescription.text.trim()
-                idDescription.setSelection(startPos)
-            }
-        }
+    private fun setBoldForceSelectedText() = with(binding) {
+        val startPos = idDescription.selectionStart
+        val endPos = idDescription.selectionEnd
 
-        private fun setItalicForceSelectedText() = with(binding) {
-            val startPos = idDescription.selectionStart
-            val endPos = idDescription.selectionEnd
-
-            val styles = idDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
-            var italicStyle: StyleSpan? = null
-            if (styles.isNotEmpty()) {
-                idDescription.text.removeSpan(styles[0])
-            } else {
-                italicStyle = StyleSpan(Typeface.ITALIC)
-                idDescription.text.setSpan(
-                    italicStyle,
-                    startPos,
-                    endPos,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                idDescription.text.trim()
-                idDescription.setSelection(startPos)
-            }
-        }
-
-        private fun updateNote(): NoteItem? = with(binding) {
-            note?.copy(
-                title = idTitle.text.toString(),
-                content = HtmlManager.toHtml(idDescription.text).trim()
+        val styles = idDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
+        var boldStyle: StyleSpan? = null
+        if (styles.isNotEmpty()) {
+            idDescription.text.removeSpan(styles[0])
+        } else {
+            boldStyle = StyleSpan(Typeface.BOLD)
+            idDescription.text.setSpan(
+                boldStyle,
+                startPos,
+                endPos,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-        }
-
-        private fun actionBarSetting() {
-            val ab = supportActionBar
-            ab?.setDisplayHomeAsUpEnabled(true)
-        }
-
-        private fun setMainResult() {
-            var editState = "new"
-            val tempNote: NoteItem? = if (note == null) {
-                createNewNote()
-            } else {
-                editState = "update"
-                updateNote()
-            }
-            val i = Intent().apply {
-                putExtra(NoteFragment.NEW_NOTE_KEY, tempNote)
-                putExtra(NoteFragment.EDIT_STATE_KEY, editState)
-            }
-            setResult(RESULT_OK, i)
-            finish()
-        }
-
-        //Создание новой заметки
-        private fun createNewNote(): NoteItem {
-            return NoteItem(
-                null,
-                binding.idTitle.text.toString(),
-                HtmlManager.toHtml(binding.idDescription.text).trim(),
-                getCurrentTime(),
-                ""
-            )
-        }
-
-        private fun getCurrentTime(): String {
-            val formatter = SimpleDateFormat("hh:mm:ss - dd/MM/yy", Locale.getDefault())
-            return formatter.format(Calendar.getInstance().time)
-        }
-
-        //Открытие панели цветов
-        private fun openColorPicker() {
-            binding.colorPicker.visibility = View.VISIBLE
-            val openAnim = AnimationUtils.loadAnimation(this, R.anim.open_color_picker)
-            binding.colorPicker.startAnimation(openAnim)
-        }
-
-        private fun closeColorPicker() {
-            val closeAnim = AnimationUtils.loadAnimation(this, R.anim.close_color_picker)
-            closeAnim.setAnimationListener(object : Animation.AnimationListener{
-                override fun onAnimationStart(p0: Animation?) {
-
-                }
-
-                override fun onAnimationEnd(p0: Animation?) {
-                    binding.colorPicker.visibility = View.GONE
-                }
-
-                override fun onAnimationRepeat(p0: Animation?) {
-
-                }
-
-            })
-            binding.colorPicker.startAnimation(closeAnim)
-
+            idDescription.text.trim()
+            idDescription.setSelection(startPos)
         }
     }
+
+    private fun setItalicForceSelectedText() = with(binding) {
+        val startPos = idDescription.selectionStart
+        val endPos = idDescription.selectionEnd
+
+        val styles = idDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
+        var italicStyle: StyleSpan? = null
+        if (styles.isNotEmpty()) {
+            idDescription.text.removeSpan(styles[0])
+        } else {
+            italicStyle = StyleSpan(Typeface.ITALIC)
+            idDescription.text.setSpan(
+                italicStyle,
+                startPos,
+                endPos,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            idDescription.text.trim()
+            idDescription.setSelection(startPos)
+        }
+    }
+
+    private fun updateNote(): NoteItem? = with(binding) {
+        note?.copy(
+            title = idTitle.text.toString(),
+            content = HtmlManager.toHtml(idDescription.text).trim()
+        )
+    }
+
+    private fun actionBarSetting() {
+        val ab = supportActionBar
+        ab?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun setMainResult() {
+        var editState = "new"
+        val tempNote: NoteItem? = if (note == null) {
+            createNewNote()
+        } else {
+            editState = "update"
+            updateNote()
+        }
+        val i = Intent().apply {
+            putExtra(NoteFragment.NEW_NOTE_KEY, tempNote)
+            putExtra(NoteFragment.EDIT_STATE_KEY, editState)
+        }
+        setResult(RESULT_OK, i)
+        finish()
+    }
+
+    //Создание новой заметки
+    private fun createNewNote(): NoteItem {
+        return NoteItem(
+            null,
+            binding.idTitle.text.toString(),
+            HtmlManager.toHtml(binding.idDescription.text).trim(),
+            getCurrentTime(),
+            ""
+        )
+    }
+
+    private fun getCurrentTime(): String {
+        val formatter = SimpleDateFormat("hh:mm:ss - dd/MM/yy", Locale.getDefault())
+        return formatter.format(Calendar.getInstance().time)
+    }
+
+    //Открытие панели цветов
+    private fun openActionMenu() {
+        binding.actionMenu.visibility = View.VISIBLE
+        val openAnim = AnimationUtils.loadAnimation(this, R.anim.open_color_picker)
+        binding.actionMenu.startAnimation(openAnim)
+    }
+
+    private fun closeActionMenu() {
+        val closeAnim = AnimationUtils.loadAnimation(this, R.anim.close_color_picker)
+        closeAnim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(p0: Animation?) {
+                binding.actionMenu.visibility = View.GONE
+            }
+
+            override fun onAnimationRepeat(p0: Animation?) {
+
+            }
+
+        })
+        binding.actionMenu.startAnimation(closeAnim)
+    }
+
+    //Открытие панели цветов
+    private fun openColorPicker() {
+        binding.colorPicker.visibility = View.VISIBLE
+        val openAnim = AnimationUtils.loadAnimation(this, R.anim.open_color_picker)
+        binding.colorPicker.startAnimation(openAnim)
+    }
+
+    private fun closeColorPicker() {
+        val closeAnim = AnimationUtils.loadAnimation(this, R.anim.close_color_picker)
+        closeAnim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {
+            }
+            override fun onAnimationEnd(p0: Animation?) {
+                binding.colorPicker.visibility = View.GONE
+            }
+
+            override fun onAnimationRepeat(p0: Animation?) {
+            }
+        })
+        binding.colorPicker.startAnimation(closeAnim)
+    }
+}

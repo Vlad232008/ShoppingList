@@ -17,7 +17,7 @@
         android:title="Курсив"
         android:orderInCategory="2"/>
     <item
-        android:id="@+id/id_color"
+        android:id="@+id/id_control_panel"
         android:title="Панель инструментов"
         android:orderInCategory="3"/>
 </menu>
