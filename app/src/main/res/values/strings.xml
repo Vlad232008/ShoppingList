@@ -6,5 +6,9 @@
     <string name="new_Item">Новый элемент</string>
     <string name="title_hint">Тема</string>
     <string name="description_hint">Описание</string>
+    <string name="new_list">Новый лист</string>
+    <string name="list_name">Имя нового элемента</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

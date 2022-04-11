@@ -1,21 +1,28 @@
 package com.example.shoppinglist.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
+import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
 import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.fragment.NoteFragment
 import com.example.shoppinglist.utils.HtmlManager
+import com.example.shoppinglist.utils.MyTouchListener
+import com.example.shoppinglist.utils.TimeManager.getCurrentTime
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,11 +35,48 @@ class NewNoteActivity : AppCompatActivity() {
         setContentView(binding.root)
         actionBarSetting()
         getNote()
+        init()
+        onClickColorPicker()
+        onClickForceMenu()
+        actionMenuCallback()
+    }
+
+    private fun onClickForceMenu() = with(binding){
         binding.ibColor.setOnClickListener {
             if (binding.colorPicker.visibility == View.VISIBLE) {
                 closeColorPicker()
             } else openColorPicker()
         }
+        binding.ibItalic.setOnClickListener {
+            setItalicForceSelectedText()
+        }
+        binding.ibBold.setOnClickListener {
+            setBoldForceSelectedText()
+        }
+    }
+    private fun onClickColorPicker() = with(binding){
+        ibBlack.setOnClickListener{
+            setColorForceSelectedText(R.color.picker_black)
+        }
+        ibRed.setOnClickListener{
+            setColorForceSelectedText(R.color.picker_red)
+        }
+        ibOrange.setOnClickListener{
+            setColorForceSelectedText(R.color.picker_orange)
+        }
+        ibYellow.setOnClickListener{
+            setColorForceSelectedText(R.color.picker_yellow)
+        }
+        ibGreen.setOnClickListener{
+            setColorForceSelectedText(R.color.picker_green)
+        }
+        ibBlue.setOnClickListener{
+            setColorForceSelectedText(R.color.picker_blue)
+        }
+    }
+    @SuppressLint("ClickableViewAccessibility")
+    private fun init(){
+        binding.colorPicker.setOnTouchListener(MyTouchListener())
     }
 
     private fun getNote() {
@@ -61,12 +105,12 @@ class NewNoteActivity : AppCompatActivity() {
             android.R.id.home -> {
                 finish()
             }
-            R.id.id_bold -> {
+            /*R.id.id_bold -> {
                 setBoldForceSelectedText()
             }
             R.id.id_italic -> {
                 setItalicForceSelectedText()
-            }
+            }*/
             R.id.id_control_panel -> {
                 if (binding.actionMenu.visibility == View.VISIBLE) {
                     closeActionMenu()
@@ -96,7 +140,19 @@ class NewNoteActivity : AppCompatActivity() {
             idDescription.setSelection(startPos)
         }
     }
-
+    private fun setColorForceSelectedText(colorId: Int) = with(binding) {
+        val startPos = idDescription.selectionStart
+        val endPos = idDescription.selectionEnd
+        val styles = idDescription.text.getSpans(startPos, endPos, ForegroundColorSpan::class.java)
+        if (styles.isNotEmpty()) idDescription.text.removeSpan(styles[0])
+            idDescription.text.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this@NewNoteActivity, colorId)),
+                startPos,
+                endPos,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            idDescription.text.trim()
+            idDescription.setSelection(startPos)
+    }
     private fun setItalicForceSelectedText() = with(binding) {
         val startPos = idDescription.selectionStart
         val endPos = idDescription.selectionEnd
@@ -157,11 +213,6 @@ class NewNoteActivity : AppCompatActivity() {
         )
     }
 
-    private fun getCurrentTime(): String {
-        val formatter = SimpleDateFormat("hh:mm:ss - dd/MM/yy", Locale.getDefault())
-        return formatter.format(Calendar.getInstance().time)
-    }
-
     //Открытие панели цветов
     private fun openActionMenu() {
         binding.actionMenu.visibility = View.VISIBLE
@@ -200,6 +251,7 @@ class NewNoteActivity : AppCompatActivity() {
         closeAnim.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {
             }
+
             override fun onAnimationEnd(p0: Animation?) {
                 binding.colorPicker.visibility = View.GONE
             }
@@ -208,5 +260,27 @@ class NewNoteActivity : AppCompatActivity() {
             }
         })
         binding.colorPicker.startAnimation(closeAnim)
+    }
+    private fun actionMenuCallback(){
+        val actionMenuCallback = object: ActionMode.Callback{
+            override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
+                p1?.clear()
+                return true
+            }
+
+            override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
+                p1?.clear()
+                return true
+            }
+
+            override fun onActionItemClicked(p0: ActionMode?, p1: MenuItem?): Boolean {
+                return true
+            }
+
+            override fun onDestroyActionMode(p0: ActionMode?) {
+
+            }
+        }
+        binding.idDescription.customSelectionActionModeCallback = actionMenuCallback
     }
 }

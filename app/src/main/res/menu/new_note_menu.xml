@@ -7,17 +7,17 @@
         android:orderInCategory="2"
         android:title="Save"
         app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/id_bold"
-        android:title="Жирный шрифт"
-        android:orderInCategory="1"/>
-    <item
-        android:id="@+id/id_italic"
-        android:title="Курсив"
-        android:orderInCategory="2"/>
     <item
         android:id="@+id/id_control_panel"
         android:title="Панель инструментов"
-        android:orderInCategory="3"/>
+        android:orderInCategory="1"/>
 </menu>
+<!--
+<item
+android:id="@+id/id_bold"
+android:title="Жирный шрифт"
+android:orderInCategory="1"/>
+<item
+android:id="@+id/id_italic"
+android:title="Курсив"
+android:orderInCategory="2"/>-->
