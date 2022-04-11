@@ -6,21 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.example.shoppinglist.db.MainViewModel
+import com.example.shoppinglist.db.ShopListNameAdapter
 import com.example.shoppinglist.dialogs.NewListDialog
 import com.example.shoppinglist.entities.ShoppingListName
 import com.example.shoppinglist.utils.TimeManager
 
 class ShopListNamesFragment : BaseFragment() {
     private lateinit var binding: FragmentShopListNamesBinding
+    private lateinit var adapter: ShopListNameAdapter
+
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as MainApp).database)
     }
 
     override fun onClickNew() {
-        NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener{
+        NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener {
             override fun onClick(name: String) {
                 val shopListName = ShoppingListName(
                     null,
@@ -52,13 +56,16 @@ class ShopListNamesFragment : BaseFragment() {
         initRcView()
         observer()
     }
-    private fun initRcView() = with(binding){
 
+    private fun initRcView() = with(binding) {
+        rcView.layoutManager = LinearLayoutManager(activity)
+        adapter = ShopListNameAdapter()
+        rcView.adapter = adapter
     }
 
-    private fun observer(){
+    private fun observer() {
         mainViewModel.allShopListName.observe(viewLifecycleOwner) {
-            //adapter.submitList(it)
+            adapter.submitList(it)
         }
     }
 
