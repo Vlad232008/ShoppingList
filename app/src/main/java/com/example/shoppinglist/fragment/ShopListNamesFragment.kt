@@ -63,7 +63,7 @@ class ShopListNamesFragment : BaseFragment() {
         rcView.adapter = adapter
     }
 
-    private fun observer() {
+    private fun observer(){
         mainViewModel.allShopListName.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }

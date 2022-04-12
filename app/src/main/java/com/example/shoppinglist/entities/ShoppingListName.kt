@@ -9,16 +9,20 @@ import java.io.Serializable
 data class ShoppingListName(
     @PrimaryKey(autoGenerate = true)
     val id:Int?,
+
     @ColumnInfo(name = "name")
     val name: String,
-    /*@ColumnInfo(name = "price")
-    val price:Int,*/
+
     @ColumnInfo(name = "time")
     val time:String,
+
     @ColumnInfo(name = "allItemCount")
     val countItem:Int,
+
     @ColumnInfo(name = "checkItemsCounter")
     val checkItemCounter:Int,
+
     @ColumnInfo(name = "ItemsIds")
     val itemsIds:String
+
 ):Serializable

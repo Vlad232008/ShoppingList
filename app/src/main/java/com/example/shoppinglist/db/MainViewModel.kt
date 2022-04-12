@@ -8,8 +8,11 @@ import java.lang.IllegalArgumentException
 
 class MainViewModel(database: MainDataBase):ViewModel() {
     val dao = database.getDao()
+
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
+
     val allShopListName: LiveData<List<ShoppingListName>> = dao.getAllShopListName().asLiveData()
+
     fun insertNote(note:NoteItem) = viewModelScope.launch {
         dao.insertNote(note)
     }
@@ -19,7 +22,7 @@ class MainViewModel(database: MainDataBase):ViewModel() {
     fun deleteNote(id: Int) = viewModelScope.launch {
         dao.deleteNote(id)
     }
-    fun insertShopListName(listName:ShoppingListName) = viewModelScope.launch {
+    fun insertShopListName(listName: ShoppingListName) = viewModelScope.launch {
         dao.insertShopListName(listName)
     }
     class MainViewModelFactory(private val database: MainDataBase): ViewModelProvider.Factory{

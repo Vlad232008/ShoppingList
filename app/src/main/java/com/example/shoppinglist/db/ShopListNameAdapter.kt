@@ -8,12 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ListNameItemBinding
-import com.example.shoppinglist.databinding.NoteListItemBinding
-import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.entities.ShoppingListName
-import com.example.shoppinglist.utils.HtmlManager
 
-class ShopListNameAdapter() :
+class ShopListNameAdapter :
     ListAdapter<ShoppingListName, ShopListNameAdapter.ItemHolder>(ItemComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
@@ -56,8 +53,8 @@ class ShopListNameAdapter() :
         }
     }
 
-    interface Listener {
+    /*interface Listener {
         fun deleteItem(id: Int)
         fun onClickItem(note: NoteItem)
-    }
+    }*/
 }

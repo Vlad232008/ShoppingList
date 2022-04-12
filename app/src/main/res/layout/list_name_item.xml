@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView3"
+        android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="22dp"
-        app:cardCornerRadius="10dp"
+        android:layout_marginEnd="3dp"
+        app:cardCornerRadius="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -36,7 +36,8 @@
                 android:id="@+id/tvTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="12sp" />
 
             <ProgressBar
                 android:id="@+id/pBar"
@@ -44,44 +45,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 
     <ImageButton
-        android:id="@+id/im_delete"
+        android:id="@+id/imDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FB8E84"
+        android:layout_marginEnd="5dp"
+        android:alpha="0.8"
+        android:backgroundTint="#E46060"
         android:elevation="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cardView3"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
         app:srcCompat="@drawable/ic_baseline_delete_24" />
 
     <ImageButton
-        android:id="@+id/im_edit"
+        android:id="@+id/imEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FBCB84"
+        android:alpha="0.8"
+        android:backgroundTint="#4DBF77"
         android:elevation="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView3"
-        app:layout_constraintEnd_toStartOf="@+id/im_delete"
-        app:layout_constraintTop_toTopOf="@+id/cardView3"
-        app:layout_constraintVertical_bias="0.681"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toStartOf="@+id/imDelete"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
         app:srcCompat="@drawable/ic_baseline_edit_24" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:backgroundTint="#F88E55"
-        app:layout_constraintBottom_toBottomOf="@+id/im_edit"
-        app:layout_constraintEnd_toStartOf="@+id/im_edit"
-        app:layout_constraintTop_toTopOf="@+id/im_edit">
+        android:id="@+id/counterCard"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="6dp"
+        android:backgroundTint="#6383FD"
+        app:cardCornerRadius="3dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imEdit"
+        app:layout_constraintEnd_toStartOf="@+id/imEdit"
+        app:layout_constraintTop_toTopOf="@+id/imEdit">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -89,12 +96,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
                 android:text="0/0"
-                android:textSize="16sp" />
+                android:textColor="@color/white" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
