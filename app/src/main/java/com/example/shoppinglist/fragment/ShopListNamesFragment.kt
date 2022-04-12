@@ -11,11 +11,12 @@ import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.example.shoppinglist.db.MainViewModel
 import com.example.shoppinglist.db.ShopListNameAdapter
+import com.example.shoppinglist.dialogs.DeleteDialog
 import com.example.shoppinglist.dialogs.NewListDialog
 import com.example.shoppinglist.entities.ShoppingListName
 import com.example.shoppinglist.utils.TimeManager
 
-class ShopListNamesFragment : BaseFragment() {
+class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
     private lateinit var binding: FragmentShopListNamesBinding
     private lateinit var adapter: ShopListNameAdapter
 
@@ -36,7 +37,8 @@ class ShopListNamesFragment : BaseFragment() {
                 )
                 mainViewModel.insertShopListName(shopListName)
             }
-        })
+        }
+        ,"")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +61,7 @@ class ShopListNamesFragment : BaseFragment() {
 
     private fun initRcView() = with(binding) {
         rcView.layoutManager = LinearLayoutManager(activity)
-        adapter = ShopListNameAdapter()
+        adapter = ShopListNameAdapter(this@ShopListNamesFragment)
         rcView.adapter = adapter
     }
 
@@ -72,5 +74,26 @@ class ShopListNamesFragment : BaseFragment() {
     companion object {
         @JvmStatic
         fun newInstance() = ShopListNamesFragment()
+    }
+
+    override fun deleteItem(id: Int) {
+        DeleteDialog.showDialog(context as AppCompatActivity, object : DeleteDialog.Listener{
+            override fun onClick() {
+                mainViewModel.deleteShopListName(id)
+            }
+        })
+    }
+
+    override fun editItem(shoppingListName: ShoppingListName) {
+        NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener {
+            override fun onClick(name: String) {
+                mainViewModel.updateShopListName(shoppingListName.copy(name = name))
+            }
+
+        }, shoppingListName.name)
+    }
+
+    override fun onClickItem(name: ShoppingListName) {
+
     }
 }

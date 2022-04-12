@@ -11,9 +11,6 @@ interface Dao {
     @Query("SELECT* From note_list")
     fun getAllNotes(): Flow<List<NoteItem>>
 
-    @Query("SELECT* From shopping_list_names")
-    fun getAllShopListName(): Flow<List<ShoppingListName>>
-
     @Query("DELETE FROM note_list where id is :id")
     suspend fun deleteNote(id:Int)
 
@@ -23,8 +20,14 @@ interface Dao {
     @Update
     suspend fun updateNote(note: NoteItem)
 
+    @Query("SELECT* From shopping_list_names")
+    fun getAllShopListName(): Flow<List<ShoppingListName>>
+
     @Insert
     suspend fun insertShopListName(name: ShoppingListName)
+
+    @Query("DELETE FROM shopping_list_names where id is :id")
+    suspend fun deleteShopListName(id:Int)
 
     @Update
     suspend fun updateShopListName(name: ShoppingListName)

@@ -19,12 +19,19 @@ class MainViewModel(database: MainDataBase):ViewModel() {
     fun updateNote(note:NoteItem) = viewModelScope.launch {
         dao.updateNote(note)
     }
+    fun updateShopListName(name:ShoppingListName) = viewModelScope.launch {
+        dao.updateShopListName(name)
+    }
     fun deleteNote(id: Int) = viewModelScope.launch {
         dao.deleteNote(id)
+    }
+    fun deleteShopListName(id: Int) = viewModelScope.launch {
+        dao.deleteShopListName(id)
     }
     fun insertShopListName(listName: ShoppingListName) = viewModelScope.launch {
         dao.insertShopListName(listName)
     }
+
     class MainViewModelFactory(private val database: MainDataBase): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(MainViewModel::class.java)){
