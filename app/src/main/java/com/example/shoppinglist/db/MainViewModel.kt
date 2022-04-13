@@ -2,7 +2,7 @@ package com.example.shoppinglist.db
 
 import androidx.lifecycle.*
 import com.example.shoppinglist.entities.NoteItem
-import com.example.shoppinglist.entities.ShoppingListName
+import com.example.shoppinglist.entities.ShopListNameItem
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
@@ -11,7 +11,7 @@ class MainViewModel(database: MainDataBase):ViewModel() {
 
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
 
-    val allShopListName: LiveData<List<ShoppingListName>> = dao.getAllShopListName().asLiveData()
+    val allShopListNameItem: LiveData<List<ShopListNameItem>> = dao.getAllShopListName().asLiveData()
 
     fun insertNote(note:NoteItem) = viewModelScope.launch {
         dao.insertNote(note)
@@ -19,8 +19,8 @@ class MainViewModel(database: MainDataBase):ViewModel() {
     fun updateNote(note:NoteItem) = viewModelScope.launch {
         dao.updateNote(note)
     }
-    fun updateShopListName(name:ShoppingListName) = viewModelScope.launch {
-        dao.updateShopListName(name)
+    fun updateShopListName(nameItem:ShopListNameItem) = viewModelScope.launch {
+        dao.updateShopListName(nameItem)
     }
     fun deleteNote(id: Int) = viewModelScope.launch {
         dao.deleteNote(id)
@@ -28,8 +28,8 @@ class MainViewModel(database: MainDataBase):ViewModel() {
     fun deleteShopListName(id: Int) = viewModelScope.launch {
         dao.deleteShopListName(id)
     }
-    fun insertShopListName(listName: ShoppingListName) = viewModelScope.launch {
-        dao.insertShopListName(listName)
+    fun insertShopListName(listNameItem: ShopListNameItem) = viewModelScope.launch {
+        dao.insertShopListName(listNameItem)
     }
 
     class MainViewModelFactory(private val database: MainDataBase): ViewModelProvider.Factory{

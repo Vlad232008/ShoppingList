@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Удалить список"
+        android:id="@+id/deletelist"
+        />
+    <item
+        android:title="Очистить список"
+        android:id="@+id/clearlist"
+        />
+    <item
+        android:title="Поделиться список"
+        android:id="@+id/sharelist"
+        />
+    <item
+        android:title="newitem"
+        android:id="@+id/newItem"
+        android:icon="@drawable/ic_baseline_library_newshop_24"
+        app:actionLayout="@layout/edit_action_layout"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:orderInCategory="1"
+        />
+    <item
+        android:title="save"
+        android:id="@+id/savelist"
+        android:icon="@drawable/ic_baseline_save_24"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="2"
+        />
+</menu>

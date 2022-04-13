@@ -11,15 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingList">
         <activity
-            android:name=".activities.NewNoteActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:theme="@style/Theme.NewNote"
+            android:name=".activities.ShopListActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.NewNoteActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NewNote"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

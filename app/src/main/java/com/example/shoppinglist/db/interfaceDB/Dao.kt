@@ -3,7 +3,7 @@ package com.example.shoppinglist.db.interfaceDB
 import androidx.room.*
 import androidx.room.Dao
 import com.example.shoppinglist.entities.NoteItem
-import com.example.shoppinglist.entities.ShoppingListName
+import com.example.shoppinglist.entities.ShopListNameItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,15 +21,15 @@ interface Dao {
     suspend fun updateNote(note: NoteItem)
 
     @Query("SELECT* From shopping_list_names")
-    fun getAllShopListName(): Flow<List<ShoppingListName>>
+    fun getAllShopListName(): Flow<List<ShopListNameItem>>
 
     @Insert
-    suspend fun insertShopListName(name: ShoppingListName)
+    suspend fun insertShopListName(nameItem: ShopListNameItem)
 
     @Query("DELETE FROM shopping_list_names where id is :id")
     suspend fun deleteShopListName(id:Int)
 
     @Update
-    suspend fun updateShopListName(name: ShoppingListName)
+    suspend fun updateShopListName(nameItem: ShopListNameItem)
 
 }
