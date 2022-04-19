@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
-import com.example.shoppinglist.databinding.ListNameItemBinding
-import com.example.shoppinglist.entities.ShopListNameItem
-import com.example.shoppinglist.entities.ShoppingListItem
+import com.example.shoppinglist.databinding.ShopListItemBinding
+import com.example.shoppinglist.entities.ShopListItem
 
-class ShopListNameItemAdapter(private val listener: Listener) :
-    ListAdapter<ShoppingListItem, ShopListNameItemAdapter.ItemHolder>(ItemComparator()) {
+class ShopListItemAdapter(private val listener: Listener) :
+    ListAdapter<ShopListItem, ShopListItemAdapter.ItemHolder>(ItemComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
 
         return if (viewType == 0)
@@ -22,7 +21,7 @@ class ShopListNameItemAdapter(private val listener: Listener) :
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        if (getItem(position).itemType == 0){
+        if (getItem(position).itemType == 0) {
             holder.setItemData(getItem(position), listener)
         } else {
             holder.setLibraryData(getItem(position), listener)
@@ -33,14 +32,19 @@ class ShopListNameItemAdapter(private val listener: Listener) :
         return getItem(position).itemType
     }
 
-    class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val binding = ListNameItemBinding.bind(view)
-        fun setItemData(shopListNameItem: ShoppingListItem, listener: Listener) = with(binding) {
+    class ItemHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        fun setItemData(shopListNameItem: ShopListItem, listener: Listener){
+            val binding = ShopListItemBinding.bind(view)
+            binding.apply {
 
+            }
         }
 
-        fun setLibraryData(shopListNameItem: ShoppingListItem, listener: Listener) = with(binding) {
+        fun setLibraryData(shopListNameItem: ShopListItem, listener: Listener){
+            val binding = ShopListItemBinding.bind(view)
+            binding.apply {
 
+            }
         }
 
         companion object {
@@ -59,26 +63,26 @@ class ShopListNameItemAdapter(private val listener: Listener) :
             }
         }
     }
-}
 
-class ItemComparator : DiffUtil.ItemCallback<ShoppingListItem>() {
-    override fun areItemsTheSame(
-        oldItem: ShoppingListItem,
-        newItem: ShoppingListItem
-    ): Boolean {
-        return oldItem.id == newItem.id
+    class ItemComparator : DiffUtil.ItemCallback<ShopListItem>() {
+        override fun areItemsTheSame(
+            oldItem: ShopListItem,
+            newItem: ShopListItem
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: ShopListItem,
+            newItem: ShopListItem
+        ): Boolean {
+            return oldItem == newItem
+        }
     }
 
-    override fun areContentsTheSame(
-        oldItem: ShoppingListItem,
-        newItem: ShoppingListItem
-    ): Boolean {
-        return oldItem == newItem
+    interface Listener {
+        fun deleteItem(id: Int)
+        fun editItem(nameItem: ShopListItem)
+        fun onClickItem(nameItem: ShopListItem)
     }
-}
-
-interface Listener {
-    fun deleteItem(id: Int)
-    fun editItem(nameItem: ShoppingListItem)
-    fun onClickItem(nameItem: ShoppingListItem)
 }

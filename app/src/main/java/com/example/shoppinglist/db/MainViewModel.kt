@@ -2,6 +2,7 @@ package com.example.shoppinglist.db
 
 import androidx.lifecycle.*
 import com.example.shoppinglist.entities.NoteItem
+import com.example.shoppinglist.entities.ShopListItem
 import com.example.shoppinglist.entities.ShopListNameItem
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
@@ -12,6 +13,10 @@ class MainViewModel(database: MainDataBase):ViewModel() {
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
 
     val allShopListNameItem: LiveData<List<ShopListNameItem>> = dao.getAllShopListName().asLiveData()
+
+    fun getAllItemsFromList(listId:Int): LiveData<List<ShopListItem>>{
+        return dao.getAllShopListItem(listId).asLiveData()
+    }
 
     fun insertNote(note:NoteItem) = viewModelScope.launch {
         dao.insertNote(note)
@@ -30,6 +35,9 @@ class MainViewModel(database: MainDataBase):ViewModel() {
     }
     fun insertShopListName(listNameItem: ShopListNameItem) = viewModelScope.launch {
         dao.insertShopListName(listNameItem)
+    }
+    fun insertShopItem(shopList: ShopListItem) = viewModelScope.launch {
+        dao.insertItem(shopList)
     }
 
     class MainViewModelFactory(private val database: MainDataBase): ViewModelProvider.Factory{
