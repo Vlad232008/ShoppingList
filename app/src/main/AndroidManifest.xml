@@ -4,7 +4,7 @@
 
     <application
         android:name=".activities.MainApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="Я помню"
         android:roundIcon="@mipmap/ic_launcher"

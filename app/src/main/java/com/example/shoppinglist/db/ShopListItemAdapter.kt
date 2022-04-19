@@ -36,7 +36,10 @@ class ShopListItemAdapter(private val listener: Listener) :
         fun setItemData(shopListNameItem: ShopListItem, listener: Listener){
             val binding = ShopListItemBinding.bind(view)
             binding.apply {
-
+                tvName.text = shopListNameItem.name
+                tvInfo.text = shopListNameItem.itemInfo
+                tvInfo.visibility = infoVisibility(shopListNameItem)
+                cBox.isChecked = shopListNameItem.itemChecked == 1
             }
         }
 
@@ -45,6 +48,12 @@ class ShopListItemAdapter(private val listener: Listener) :
             binding.apply {
 
             }
+        }
+
+        private fun infoVisibility(shopListNameItem: ShopListItem): Int{
+            return if (shopListNameItem.itemInfo?.isNullOrEmpty() == true) {
+                View.GONE
+            } else View.VISIBLE
         }
 
         companion object {
