@@ -34,6 +34,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         init()
         initRcView()
         listItemObserver()
+        //actionBarSetting()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -47,12 +48,21 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.savelist) {
-            addShopItem()
+        when(item.itemId) {
+            R.id.savelist-> {
+                addShopItem()
+            }
+            androidx.appcompat.R.id.home -> {
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    /*private fun actionBarSetting() {
+        val ab = supportActionBar
+        ab?.setDisplayHomeAsUpEnabled(true)
+    }*/
     private fun addShopItem(){
         if (edItem?.text.toString().isEmpty()) return
         val item = ShopListItem(

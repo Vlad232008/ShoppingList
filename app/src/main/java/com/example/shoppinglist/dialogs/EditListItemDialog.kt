@@ -15,9 +15,9 @@ object EditListItemDialog {
         val binding = EditListItemDialogBinding.inflate(LayoutInflater.from(context))
         builder.setView(binding.root)
         binding.apply {
+            edName.setText(item.name)
+            edInfo.setText(item.itemInfo)
             bUpdate.setOnClickListener {
-                edName.setText(item.name)
-                edInfo.setText(item.itemInfo)
                 if (edName.text.toString().isNotEmpty()) {
                     listener.onClick(item.copy(name = edName.text.toString(), itemInfo = edInfo.text.toString()))
                 }

@@ -35,7 +35,7 @@
                 android:layout_margin="2dp"
                 android:ems="10"
                 android:inputType="textMultiLine"
-                android:text="@string/nameTov" />
+                android:hint="@string/nameTov" />
 
             <EditText
                 android:id="@+id/edInfo"

@@ -105,12 +105,6 @@ class NewNoteActivity : AppCompatActivity() {
             android.R.id.home -> {
                 finish()
             }
-            /*R.id.id_bold -> {
-                setBoldForceSelectedText()
-            }
-            R.id.id_italic -> {
-                setItalicForceSelectedText()
-            }*/
             R.id.id_control_panel -> {
                 if (binding.actionMenu.visibility == View.VISIBLE) {
                     closeActionMenu()
