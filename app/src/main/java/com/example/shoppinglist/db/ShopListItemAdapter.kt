@@ -1,13 +1,17 @@
 package com.example.shoppinglist.db
 
+import android.graphics.Color
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ShopListItemBinding
+import com.example.shoppinglist.dialogs.EditListItemDialog
 import com.example.shoppinglist.entities.ShopListItem
 
 class ShopListItemAdapter(private val listener: Listener) :
@@ -33,13 +37,20 @@ class ShopListItemAdapter(private val listener: Listener) :
     }
 
     class ItemHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        fun setItemData(shopListNameItem: ShopListItem, listener: Listener){
+        fun setItemData(shopListItem: ShopListItem, listener: Listener){
             val binding = ShopListItemBinding.bind(view)
             binding.apply {
-                tvName.text = shopListNameItem.name
-                tvInfo.text = shopListNameItem.itemInfo
-                tvInfo.visibility = infoVisibility(shopListNameItem)
-                cBox.isChecked = shopListNameItem.itemChecked == 1
+                tvName.text = shopListItem.name
+                tvInfo.text = shopListItem.itemInfo
+                tvInfo.visibility = infoVisibility(shopListItem)
+                cBox.isChecked = shopListItem.itemChecked
+                setPaintFlagAndColor(binding)
+                cBox.setOnClickListener{
+                    listener.onClickItem(shopListItem.copy(itemChecked = cBox.isChecked), CHECK_BOX)
+                }
+                imEdit.setOnClickListener{
+                    listener.onClickItem(shopListItem, EDIT)
+                }
             }
         }
 
@@ -50,8 +61,24 @@ class ShopListItemAdapter(private val listener: Listener) :
             }
         }
 
+
+        private fun setPaintFlagAndColor(binding: ShopListItemBinding){
+            binding.apply{
+                if (cBox.isChecked) {
+                    tvName.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    tvInfo.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    tvName.setTextColor(ContextCompat.getColor(binding.root.context, R.color.gray))
+                    tvInfo.setTextColor(ContextCompat.getColor(binding.root.context, R.color.gray))
+                } else {
+                    tvName.paintFlags = Paint.ANTI_ALIAS_FLAG
+                    tvInfo.paintFlags = Paint.ANTI_ALIAS_FLAG
+                    tvName.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                    tvInfo.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                }
+            }
+        }
         private fun infoVisibility(shopListNameItem: ShopListItem): Int{
-            return if (shopListNameItem.itemInfo?.isNullOrEmpty() == true) {
+            return if (shopListNameItem.itemInfo.isEmpty()) {
                 View.GONE
             } else View.VISIBLE
         }
@@ -90,8 +117,11 @@ class ShopListItemAdapter(private val listener: Listener) :
     }
 
     interface Listener {
-        fun deleteItem(id: Int)
-        fun editItem(nameItem: ShopListItem)
-        fun onClickItem(nameItem: ShopListItem)
+        fun onClickItem(nameItem: ShopListItem, state: Int)
+    }
+
+    companion object {
+        const val EDIT = 0
+        const val CHECK_BOX = 1
     }
 }

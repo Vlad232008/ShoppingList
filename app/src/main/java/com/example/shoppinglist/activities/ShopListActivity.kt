@@ -3,6 +3,7 @@ package com.example.shoppinglist.activities
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityShopListBinding
 import com.example.shoppinglist.db.MainViewModel
 import com.example.shoppinglist.db.ShopListItemAdapter
+import com.example.shoppinglist.dialogs.EditListItemDialog
 import com.example.shoppinglist.entities.ShopListItem
 import com.example.shoppinglist.entities.ShopListNameItem
 
@@ -56,8 +58,8 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         val item = ShopListItem(
             null,
             name = edItem?.text.toString(),
-            null,
-            0,
+            "",
+            false,
             shopListNameItem?.id!!,
             0
         )
@@ -68,6 +70,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     private fun listItemObserver(){
         mainViewModel.getAllItemsFromList(shopListNameItem?.id!!).observe(this) {
             adapter.submitList(it)
+            binding.tvEmpty.visibility = if(it.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
@@ -100,15 +103,18 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         const val SHOP_LIST_NAME = "shop_list_name"
     }
 
-    override fun deleteItem(id: Int) {
-        TODO("Not yet implemented")
+    override fun onClickItem(nameItem: ShopListItem, state: Int) {
+        when(state){
+            ShopListItemAdapter.CHECK_BOX -> mainViewModel.updateListItem(nameItem)
+            ShopListItemAdapter.EDIT -> editListItem(nameItem)
+        }
     }
 
-    override fun editItem(nameItem: ShopListItem) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onClickItem(nameItem: ShopListItem) {
-        TODO("Not yet implemented")
+    private fun editListItem(item: ShopListItem){
+        EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener{
+            override fun onClick(item: ShopListItem) {
+                mainViewModel.updateListItem(item)
+            }
+        })
     }
 }
