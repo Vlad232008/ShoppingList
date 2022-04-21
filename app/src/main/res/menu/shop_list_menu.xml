@@ -10,7 +10,7 @@
         android:id="@+id/clearlist"
         />
     <item
-        android:title="Поделиться список"
+        android:title="Поделиться списком"
         android:id="@+id/sharelist"
         />
     <item

@@ -93,6 +93,12 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         }
     }
 
+    private fun libraryItemObserver(){
+        mainViewModel.getAllItemsFromList(shopListNameItem?.id!!).observe(this) {
+            adapter.submitList(it)
+        }
+    }
+
     private fun initRcView() = with(binding) {
         rcView.layoutManager = LinearLayoutManager(this@ShopListActivity)
         adapter = ShopListItemAdapter(this@ShopListActivity)
