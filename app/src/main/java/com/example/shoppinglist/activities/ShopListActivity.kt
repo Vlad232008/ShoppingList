@@ -1,5 +1,6 @@
 package com.example.shoppinglist.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -15,13 +16,14 @@ import com.example.shoppinglist.db.ShopListItemAdapter
 import com.example.shoppinglist.dialogs.EditListItemDialog
 import com.example.shoppinglist.entities.ShopListItem
 import com.example.shoppinglist.entities.ShopListNameItem
+import com.example.shoppinglist.utils.ShareHelper
 
 class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     private lateinit var binding: ActivityShopListBinding
     private var shopListNameItem: ShopListNameItem? = null
     private lateinit var saveItem: MenuItem
     private lateinit var adapter: ShopListItemAdapter
-    private var edItem:EditText? = null
+    private var edItem: EditText? = null
 
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModel.MainViewModelFactory((applicationContext as MainApp).database)
@@ -34,7 +36,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         init()
         initRcView()
         listItemObserver()
-        //actionBarSetting()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -48,22 +49,30 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.savelist-> {
+        when (item.itemId) {
+            R.id.savelist -> {
                 addShopItem()
             }
-            androidx.appcompat.R.id.home -> {
+            R.id.deletelist -> {
+                mainViewModel.deleteShopListName(shopListNameItem?.id!!, true)
                 finish()
+            }
+            R.id.clearlist -> {
+                mainViewModel.deleteShopListName(shopListNameItem?.id!!, false)
+            }
+            R.id.sharelist -> {
+                startActivity(
+                    Intent.createChooser(
+                        ShareHelper.shareShopList(adapter.currentList, shopListNameItem?.name!!),
+                        "Share by"
+                    )
+                )
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    /*private fun actionBarSetting() {
-        val ab = supportActionBar
-        ab?.setDisplayHomeAsUpEnabled(true)
-    }*/
-    private fun addShopItem(){
+    private fun addShopItem() {
         if (edItem?.text.toString().isEmpty()) return
         val item = ShopListItem(
             null,
@@ -77,14 +86,14 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         mainViewModel.insertShopItem(item)
     }
 
-    private fun listItemObserver(){
+    private fun listItemObserver() {
         mainViewModel.getAllItemsFromList(shopListNameItem?.id!!).observe(this) {
             adapter.submitList(it)
-            binding.tvEmpty.visibility = if(it.isEmpty()) View.VISIBLE else View.GONE
+            binding.tvEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
-    private fun initRcView() = with(binding){
+    private fun initRcView() = with(binding) {
         rcView.layoutManager = LinearLayoutManager(this@ShopListActivity)
         adapter = ShopListItemAdapter(this@ShopListActivity)
         rcView.adapter = adapter
@@ -114,14 +123,14 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     }
 
     override fun onClickItem(nameItem: ShopListItem, state: Int) {
-        when(state){
+        when (state) {
             ShopListItemAdapter.CHECK_BOX -> mainViewModel.updateListItem(nameItem)
             ShopListItemAdapter.EDIT -> editListItem(nameItem)
         }
     }
 
-    private fun editListItem(item: ShopListItem){
-        EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener{
+    private fun editListItem(item: ShopListItem) {
+        EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener {
             override fun onClick(item: ShopListItem) {
                 mainViewModel.updateListItem(item)
             }

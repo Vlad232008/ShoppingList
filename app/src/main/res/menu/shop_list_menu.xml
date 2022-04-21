@@ -18,14 +18,14 @@
         android:id="@+id/newItem"
         android:icon="@drawable/ic_baseline_library_newshop_24"
         app:actionLayout="@layout/edit_action_layout"
-        app:showAsAction="ifRoom|collapseActionView"
+        app:showAsAction="always|collapseActionView"
         android:orderInCategory="1"
         />
     <item
         android:title="save"
         android:id="@+id/savelist"
         android:icon="@drawable/ic_baseline_save_24"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:orderInCategory="2"
         />
 </menu>
