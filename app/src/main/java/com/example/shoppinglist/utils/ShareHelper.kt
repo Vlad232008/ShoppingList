@@ -13,16 +13,14 @@ object ShareHelper {
         return intent
     }
     private fun makeShareText(shopList: List<ShopListItem>, listName: String): String{
-        var sBuilder = StringBuilder()
-        sBuilder.append("<<$listName>>")
+        val sBuilder = StringBuilder()
+        sBuilder.append(listName)
         sBuilder.append("\n")
         var counter = 0
         shopList.forEach{
-            sBuilder.append("${counter++} - ${it.name} (${it.itemInfo})")
-
+            sBuilder.append("${counter++} - ${it.name} ${it.itemInfo.ifEmpty {""}}")
+            sBuilder.append("\n")
         }
         return sBuilder.toString()
     }
-
-
 }
