@@ -16,8 +16,6 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
@@ -90,10 +88,6 @@ class NewNoteActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val NOTIFICATION_ID = 101
-        const val CHANNEL_ID = "channelID"
-    }
     private fun fillNote() = with(binding) {
         idTitle.setText(note?.title)
         idDescription.setText(HtmlManager.getFromHtml(note?.content!!).trim())
@@ -108,22 +102,12 @@ class NewNoteActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.id_save -> {
                 if (binding.idTitle.text.isEmpty()){
-                    /*val text = "Тема пуста!"
+                    val text = "Тема пуста!"
                     val duration = Toast.LENGTH_SHORT
                     val toast = Toast.makeText(applicationContext, text, duration)
-                    toast.show()*/
-                    // Создаём уведомление
-                    val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_baseline_edit_24)
-                        .setContentTitle("Напоминание")
-                        .setContentText("Пора покормить кота")
-                        .setAutoCancel(true)
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-                    with(NotificationManagerCompat.from(this)) {
-                        notify(NOTIFICATION_ID, builder.build()) // посылаем уведомление
-                    }
-                    } else setMainResult()
+                    toast.show()
+                }
+                else setMainResult()
             }
             android.R.id.home -> {
                 finish()

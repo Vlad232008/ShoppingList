@@ -11,6 +11,7 @@ import java.lang.IllegalArgumentException
 class MainViewModel(database: MainDataBase):ViewModel() {
     val dao = database.getDao()
 
+    val libraryItems = MutableLiveData<List<LibraryItem>>()
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
 
     val allShopListNameItem: LiveData<List<ShopListNameItem>> = dao.getAllShopListName().asLiveData()
@@ -18,7 +19,9 @@ class MainViewModel(database: MainDataBase):ViewModel() {
     fun getAllItemsFromList(listId:Int): LiveData<List<ShopListItem>>{
         return dao.getAllShopListItem(listId).asLiveData()
     }
-
+    fun getAllLibraryItems(name:String) = viewModelScope.launch{
+        libraryItems.postValue(dao.getAllLibraryItems(name))
+    }
     fun insertNote(note:NoteItem) = viewModelScope.launch {
         dao.insertNote(note)
     }
@@ -41,12 +44,12 @@ class MainViewModel(database: MainDataBase):ViewModel() {
     fun insertShopListName(listNameItem: ShopListNameItem) = viewModelScope.launch {
         dao.insertShopListName(listNameItem)
     }
-    fun insertShopItem(shopList: ShopListItem) = viewModelScope.launch {
-        dao.insertItem(shopList)
-        if (!isLibraryExists(shopList.name)) dao.insertLibraryItem(LibraryItem(null, shopList.name))
+    fun insertShopItem(shopListItem: ShopListItem) = viewModelScope.launch {
+        dao.insertItem(shopListItem)
+        if (!isLibraryItemExists(shopListItem.name)) dao.insertLibraryItem(LibraryItem(null, shopListItem.name))
     }
-    private suspend fun isLibraryExists(name: String): Boolean {
-        return dao.getAllLibraryItem(name).isNotEmpty()
+    private suspend fun isLibraryItemExists(name: String): Boolean {
+        return dao.getAllLibraryItems(name).isNotEmpty()
     }
 
     class MainViewModelFactory(private val database: MainDataBase): ViewModelProvider.Factory{

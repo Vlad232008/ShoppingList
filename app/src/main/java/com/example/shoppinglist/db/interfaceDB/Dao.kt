@@ -20,7 +20,7 @@ interface Dao {
     fun getAllShopListItem(listId: Int): Flow<List<ShopListItem>>
 
     @Query("SELECT* From library where name like :name")
-    fun getAllLibraryItem(name: String):List<LibraryItem>
+    suspend fun getAllLibraryItems(name: String): List<LibraryItem>
 
     @Query("DELETE FROM note_list where id is :id")
     suspend fun deleteNote(id:Int)

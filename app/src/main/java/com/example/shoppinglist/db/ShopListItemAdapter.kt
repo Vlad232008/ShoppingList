@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
+import com.example.shoppinglist.databinding.LibraryListItemBinding
 import com.example.shoppinglist.databinding.ShopListItemBinding
 import com.example.shoppinglist.dialogs.EditListItemDialog
 import com.example.shoppinglist.entities.ShopListItem
@@ -55,9 +56,9 @@ class ShopListItemAdapter(private val listener: Listener) :
         }
 
         fun setLibraryData(shopListNameItem: ShopListItem, listener: Listener){
-            val binding = ShopListItemBinding.bind(view)
+            val binding = LibraryListItemBinding.bind(view)
             binding.apply {
-
+                tvName.text = shopListNameItem.name
             }
         }
 
