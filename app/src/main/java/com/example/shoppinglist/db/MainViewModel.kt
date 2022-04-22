@@ -31,12 +31,19 @@ class MainViewModel(database: MainDataBase):ViewModel() {
     fun updateListItem(shopItem:ShopListItem) = viewModelScope.launch {
         dao.updateListItem(shopItem)
     }
+    fun updateLibraryItem(libraryItem: LibraryItem) = viewModelScope.launch {
+        dao.updateLibraryItem(libraryItem)
+    }
     fun updateShopListName(nameItem:ShopListNameItem) = viewModelScope.launch {
         dao.updateShopListName(nameItem)
     }
     fun deleteNote(id: Int) = viewModelScope.launch {
         dao.deleteNote(id)
     }
+    fun deleteLibraryItem(id: Int) = viewModelScope.launch {
+        dao.deleteLibraryItem(id)
+    }
+
     fun deleteShopListName(id: Int, deleteList: Boolean) = viewModelScope.launch {
         if (deleteList) dao.deleteShopListName(id)
         dao.deleteShopListItem(id)

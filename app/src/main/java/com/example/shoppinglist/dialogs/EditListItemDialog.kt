@@ -2,6 +2,7 @@ package com.example.shoppinglist.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.EditListItemDialogBinding
@@ -17,6 +18,7 @@ object EditListItemDialog {
         binding.apply {
             edName.setText(item.name)
             edInfo.setText(item.itemInfo)
+            if (item.itemType == 1) edInfo.visibility = View.GONE
             bUpdate.setOnClickListener {
                 if (edName.text.toString().isNotEmpty()) {
                     listener.onClick(item.copy(name = edName.text.toString(), itemInfo = edInfo.text.toString()))

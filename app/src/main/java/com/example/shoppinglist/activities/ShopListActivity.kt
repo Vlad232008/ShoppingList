@@ -17,6 +17,7 @@ import com.example.shoppinglist.databinding.ActivityShopListBinding
 import com.example.shoppinglist.db.MainViewModel
 import com.example.shoppinglist.db.ShopListItemAdapter
 import com.example.shoppinglist.dialogs.EditListItemDialog
+import com.example.shoppinglist.entities.LibraryItem
 import com.example.shoppinglist.entities.ShopListItem
 import com.example.shoppinglist.entities.ShopListNameItem
 import com.example.shoppinglist.utils.ShareHelper
@@ -175,6 +176,11 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         when (state) {
             ShopListItemAdapter.CHECK_BOX -> mainViewModel.updateListItem(nameItem)
             ShopListItemAdapter.EDIT -> editListItem(nameItem)
+            ShopListItemAdapter.EDIT_LIBRARY_ITEM -> editLibraryItem(nameItem)
+            ShopListItemAdapter.DELETE_LIBRARY_ITEM -> {
+                mainViewModel.deleteLibraryItem(nameItem.id!!)
+                mainViewModel.getAllLibraryItems("%${edItem?.text.toString()}%")
+            }
         }
     }
 
@@ -182,6 +188,14 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener {
             override fun onClick(item: ShopListItem) {
                 mainViewModel.updateListItem(item)
+            }
+        })
+    }
+    private fun editLibraryItem(item: ShopListItem) {
+        EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener {
+            override fun onClick(item: ShopListItem) {
+                mainViewModel.updateLibraryItem(LibraryItem(item.id,item.name))
+                mainViewModel.getAllLibraryItems("%${edItem?.text.toString()}%")
             }
         })
     }
