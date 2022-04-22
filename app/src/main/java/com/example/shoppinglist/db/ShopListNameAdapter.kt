@@ -25,6 +25,9 @@ class ShopListNameAdapter(private val listener: Listener) :
         fun setData(shopListNameItem: ShopListNameItem, listener: Listener) = with(binding) {
             tvListName.text = shopListNameItem.name
             tvTime.text = shopListNameItem.time
+            val counterItem = "${shopListNameItem.checkItemCounter}/${shopListNameItem.countItem}"
+            tvCounter.text = counterItem
+            pBar.progress = shopListNameItem.countItem/shopListNameItem.checkItemCounter
             itemView.setOnClickListener {
                 listener.onClickItem(shopListNameItem)
             }

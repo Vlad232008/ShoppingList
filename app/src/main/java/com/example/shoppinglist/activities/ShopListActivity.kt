@@ -75,7 +75,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.savelist -> {
-                addShopItem()
+                addShopItem(edItem?.text.toString())
             }
             R.id.deletelist -> {
                 mainViewModel.deleteShopListName(shopListNameItem?.id!!, true)
@@ -96,11 +96,12 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun addShopItem() {
+    private fun addShopItem(name: String) {
+        if (name.isEmpty())return
         if (edItem?.text.toString().isEmpty()) return
         val item = ShopListItem(
             null,
-            name = edItem?.text.toString(),
+            name,
             "",
             false,
             shopListNameItem?.id!!,
@@ -181,6 +182,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
                 mainViewModel.deleteLibraryItem(nameItem.id!!)
                 mainViewModel.getAllLibraryItems("%${edItem?.text.toString()}%")
             }
+            ShopListItemAdapter.ADD -> addShopItem(nameItem.name)
         }
     }
 
@@ -198,5 +200,21 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
                 mainViewModel.getAllLibraryItems("%${edItem?.text.toString()}%")
             }
         })
+    }
+    private fun saveCountItems(){
+        var checkedItemCounter = 0
+        adapter.currentList.forEach {
+            if(it.itemChecked) checkedItemCounter++
+        }
+        val tempShopListNameItem = shopListNameItem?.copy(
+            countItem = adapter.itemCount,
+            checkItemCounter = checkedItemCounter
+        )
+        mainViewModel.updateShopListName(tempShopListNameItem!!)
+    }
+
+    override fun onBackPressed() {
+        saveCountItems()
+        super.onBackPressed()
     }
 }
