@@ -8,6 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,9 +23,10 @@
                 android:id="@+id/tvView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:gravity="center"
                 android:text="Обновление товара"
-                android:textColor="@color/black"
+                android:textColor="@color/purple_500"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -32,16 +34,16 @@
                 android:id="@+id/edName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_margin="4dp"
                 android:ems="10"
-                android:inputType="textMultiLine"
-                android:hint="@string/nameTov" />
+                android:hint="@string/nameTov"
+                android:inputType="textMultiLine" />
 
             <EditText
                 android:id="@+id/edInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_margin="4dp"
                 android:ems="10"
                 android:hint="Информация о товаре"
                 android:inputType="textMultiLine" />
