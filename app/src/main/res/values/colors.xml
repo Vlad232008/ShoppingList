@@ -9,11 +9,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#173AFF</color>
     <color name="gray">#838383</color>
-
     <color name="picker_red">#F80025</color>
     <color name="picker_blue">#173AFF</color>
     <color name="picker_black">#000000</color>
     <color name="picker_yellow">#FFDA22</color>
     <color name="picker_green">#44FF00</color>
     <color name="picker_orange">#FF7417</color>
+    <color name="light_yellow">#FFF3B0</color>
+    <color name="light_pink">#CA26FF</color>
+
 </resources>
