@@ -17,5 +17,8 @@
     <color name="picker_orange">#FF7417</color>
     <color name="light_yellow">#FFF3B0</color>
     <color name="light_pink">#CA26FF</color>
+    <color name="red">#F05F57</color>
+    <color name="burgundy">#360940</color>
+
 
 </resources>

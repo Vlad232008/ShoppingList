@@ -7,9 +7,13 @@
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_baseline_note_24.xml" value="0.2995" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_baseline_note_add_24.xml" value="0.2995" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.2995" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_gradient_red_burgundy.xml" value="0.2995" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_gradient_yellow_blue.xml" value="0.141" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/activity_main.xml" value="0.3605072463768116" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/activity_new_note.xml" value="0.25" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/activity_setting.xml" value="0.3605072463768116" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/activity_shop_list.xml" value="0.17831813576494426" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/delete_dialog.xml" value="0.3605072463768116" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/edit_action_layout.xml" value="0.3605072463768116" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/edit_list_item_dialog.xml" value="0.3605072463768116" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/fragment_note.xml" value="0.3605072463768116" />
@@ -22,18 +26,13 @@
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/menu/bottom_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/menu/new_note_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/menu/shop_list_menu.xml" value="0.36102564102564105" />
-        <entry key="..\:/ShoppingList/app/src/main/res/drawable/ic_gradient_black_orange_white.xml" value="0.2865" />
-        <entry key="..\:/ShoppingList/app/src/main/res/drawable/ic_gradient_orange_white.xml" value="0.2865" />
-        <entry key="..\:/ShoppingList/app/src/main/res/drawable/ic_gradient_red_burgundy.xml" value="0.2865" />
         <entry key="..\:/ShoppingList/app/src/main/res/layout/activity_new_note.xml" value="0.36666666666666664" />
-        <entry key="..\:/ShoppingList/app/src/main/res/layout/activity_setting.xml" value="0.24316939890710382" />
         <entry key="..\:/ShoppingList/app/src/main/res/layout/activity_shop_list.xml" value="0.1799863387978142" />
         <entry key="..\:/ShoppingList/app/src/main/res/layout/list_name_item.xml" value="0.24316939890710382" />
         <entry key="..\:/ShoppingList/app/src/main/res/layout/note_list_item.xml" value="0.358695652173913" />
         <entry key="..\:/ShoppingList/app/src/main/res/layout/shop_list_item.xml" value="0.24316939890710382" />
         <entry key="..\:/ShoppingList/app/src/main/res/menu/new_note_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/ShoppingList/app/src/main/res/menu/shop_list_menu.xml" value="0.275" />
-        <entry key="..\:/ShoppingList/app/src/main/res/xml/setting_preference.xml" value="0.3009833262077811" />
       </map>
     </option>
   </component>
