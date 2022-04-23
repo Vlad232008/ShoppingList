@@ -41,7 +41,9 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         init()
         initRcView()
         listItemObserver()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
+
 
     private fun textWatcher(): TextWatcher {
         return object : TextWatcher{
@@ -50,7 +52,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                Log.d("MyLog","Мы тут, кто мы $p0")
                 mainViewModel.getAllLibraryItems("%$p0%")
             }
 
@@ -91,6 +92,9 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
                         "Share by"
                     )
                 )
+            }
+            android.R.id.home -> {
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)
