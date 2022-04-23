@@ -98,7 +98,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
 
     private fun addShopItem(name: String) {
         if (name.isEmpty())return
-        if (edItem?.text.toString().isEmpty()) return
         val item = ShopListItem(
             null,
             name,

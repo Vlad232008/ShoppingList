@@ -1,5 +1,6 @@
 package com.example.shoppinglist.db
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,8 @@ class ShopListNameAdapter(private val listener: Listener) :
             tvTime.text = shopListNameItem.time
             val counterItem = "${shopListNameItem.checkItemCounter}/${shopListNameItem.countItem}"
             tvCounter.text = counterItem
-            pBar.progress = shopListNameItem.countItem/shopListNameItem.checkItemCounter
+            pBar.max = shopListNameItem.countItem
+            pBar.progress =shopListNameItem.checkItemCounter
             itemView.setOnClickListener {
                 listener.onClickItem(shopListNameItem)
             }
