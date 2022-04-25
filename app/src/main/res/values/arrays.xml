@@ -14,17 +14,17 @@
         <item>12:59:59 – 23/04/2022</item>
     </string-array>
     <string-array name="time_format_values">
-        <item>hh:mm:ss - yyyy/MM/dd</item>
-        <item>hh:mm:ss - dd/MM/yy</item>
+        <item>HH:mm:ss - yyyy/MM/dd</item>
+        <item>HH:mm:ss - dd/MM/yyyy</item>
     </string-array>
 
     <string-array name="chose_style_array">
+        <item>Red theme</item>
         <item>Blue theme</item>
-        <item>Green theme</item>
     </string-array>
     <string-array name="chose_style_values">
+        <item>red</item>
         <item>blue</item>
-        <item>green</item>
     </string-array>
 
     <string-array name="text_size_array">

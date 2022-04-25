@@ -19,6 +19,9 @@
     <color name="light_pink">#CA26FF</color>
     <color name="red">#F05F57</color>
     <color name="burgundy">#360940</color>
+    <color name="pink">#CA26FF</color>
+    <color name="cyan">#52E5E7</color>
+    <color name="dark_blue">#130CB7</color>
 
 
 </resources>

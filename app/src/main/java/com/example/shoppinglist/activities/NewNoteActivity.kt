@@ -2,7 +2,9 @@ package com.example.shoppinglist.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
@@ -14,9 +16,12 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
+import androidx.preference.PreferenceManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
 import com.example.shoppinglist.entities.NoteItem
@@ -30,17 +35,38 @@ import java.util.*
 class NewNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewNoteBinding
     private var note: NoteItem? = null
+    private lateinit var defPref: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this)
+        setTheme(getSelectedTheme())
         super.onCreate(savedInstanceState)
         binding = ActivityNewNoteBinding.inflate(layoutInflater)
+        //binding.constLayout.background = getBackground()
         setContentView(binding.root)
         actionBarSetting()
         getNote()
         init()
+        setTextSize()
         onClickColorPicker()
         onClickForceMenu()
         actionMenuCallback()
     }
+
+    private fun getSelectedTheme():Int{
+        return if(defPref.getString("theme_key", "red") == "red"){
+            R.style.Theme_NewNoteLightRed
+        } else {
+            R.style.Theme_NewNoteLightBlue
+        }
+    }
+
+    /*private fun getBackground():Drawable{
+        return if(defPref.getString("theme_key", "red") == "red"){
+            R.drawable.ic_gradient_red_burgundy.toDrawable()
+        } else {
+            R.drawable.ic_gradient_cyan_blue.toDrawable()
+        }
+    }*/
 
     private fun onClickForceMenu() = with(binding){
         binding.ibColor.setOnClickListener {
@@ -247,6 +273,7 @@ class NewNoteActivity : AppCompatActivity() {
         binding.colorPicker.startAnimation(openAnim)
     }
 
+    //Закрытие панели цветов
     private fun closeColorPicker() {
         val closeAnim = AnimationUtils.loadAnimation(this, R.anim.close_color_picker)
         closeAnim.setAnimationListener(object : Animation.AnimationListener {
@@ -284,4 +311,13 @@ class NewNoteActivity : AppCompatActivity() {
         }
         binding.idDescription.customSelectionActionModeCallback = actionMenuCallback
     }
+
+    private fun setTextSize() = with(binding){
+        idTitle.setTextSize(defPref?.getString("title_size_key", "16"))
+        idDescription.setTextSize(defPref?.getString("content_size_key", "14"))
+    }
+    private fun EditText.setTextSize(size :String?){
+        if(size != null) this.textSize = size.toFloat()
+    }
+
 }
