@@ -9,7 +9,7 @@
         android:label="Я помню"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ShoppingList">
+        android:theme="@style/Theme.ShoppingListLightRed">
         <activity
             android:name=".setting.SettingActivity"
             android:exported="false" />
@@ -19,7 +19,7 @@
         <activity
             android:name=".activities.NewNoteActivity"
             android:exported="false"
-            android:theme="@style/Theme.NewNote"
+            android:theme="@style/Theme.NewNoteLightRed"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".activities.MainActivity"

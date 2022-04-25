@@ -1,16 +1,17 @@
 package com.example.shoppinglist.activities
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityShopListBinding
@@ -29,12 +30,15 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     private lateinit var adapter: ShopListItemAdapter
     private var edItem: EditText? = null
     private lateinit var textWatcher: TextWatcher
+    private lateinit var defPref: SharedPreferences
 
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModel.MainViewModelFactory((applicationContext as MainApp).database)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this)
+        setTheme(getSelectedTheme())
         super.onCreate(savedInstanceState)
         binding = ActivityShopListBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -44,6 +48,13 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    private fun getSelectedTheme():Int{
+        return if(defPref.getString("theme_key", "red") == "red"){
+            R.style.Theme_ShoppingListLightRed
+        } else {
+            R.style.Theme_ShoppingListLightBlue
+        }
+    }
 
     private fun textWatcher(): TextWatcher {
         return object : TextWatcher{

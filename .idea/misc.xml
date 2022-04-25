@@ -3,12 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.141" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_baseline_list_24.xml" value="0.2995" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_baseline_note_24.xml" value="0.2995" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_baseline_note_add_24.xml" value="0.2995" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_baseline_save_24.xml" value="0.141" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.2995" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_baseline_subject_24.xml" value="0.141" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_baseline_timelapse_24.xml" value="0.141" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_gradient_cyan_blue.xml" value="0.141" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_gradient_orange_white.xml" value="0.141" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_gradient_red_burgundy.xml" value="0.2995" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_gradient_yellow_blue.xml" value="0.141" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_gradient_yellow_pink.xml" value="0.141" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_launcher_background.xml" value="0.141" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/drawable/ic_style.xml" value="0.141" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/activity_main.xml" value="0.3605072463768116" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/activity_new_note.xml" value="0.25" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/layout/activity_setting.xml" value="0.3605072463768116" />
@@ -26,6 +35,7 @@
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/menu/bottom_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/menu/new_note_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Curse/ShoppingList/app/src/main/res/menu/shop_list_menu.xml" value="0.36102564102564105" />
+        <entry key="..\:/Curse/ShoppingList/app/src/main/res/xml/setting_preference.xml" value="0.3605072463768116" />
         <entry key="..\:/ShoppingList/app/src/main/res/layout/activity_new_note.xml" value="0.36666666666666664" />
         <entry key="..\:/ShoppingList/app/src/main/res/layout/activity_shop_list.xml" value="0.1799863387978142" />
         <entry key="..\:/ShoppingList/app/src/main/res/layout/list_name_item.xml" value="0.24316939890710382" />
