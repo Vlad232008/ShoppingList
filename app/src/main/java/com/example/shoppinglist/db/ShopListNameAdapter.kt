@@ -1,5 +1,6 @@
 package com.example.shoppinglist.db
 
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -10,22 +11,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ListNameItemBinding
 import com.example.shoppinglist.entities.ShopListNameItem
+import com.example.shoppinglist.utils.TimeManager
 
-class ShopListNameAdapter(private val listener: Listener) :
+class ShopListNameAdapter(private val listener: Listener, private val defPref: SharedPreferences) :
     ListAdapter<ShopListNameItem, ShopListNameAdapter.ItemHolder>(ItemComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.setData(getItem(position), listener)
+        holder.setData(getItem(position), listener, defPref)
     }
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListNameItemBinding.bind(view)
-        fun setData(shopListNameItem: ShopListNameItem, listener: Listener) = with(binding) {
+        fun setData(shopListNameItem: ShopListNameItem, listener: Listener, defPref: SharedPreferences) = with(binding) {
             tvListName.text = shopListNameItem.name
-            tvTime.text = shopListNameItem.time
+            tvTime.text = TimeManager.getTimeFormat(shopListNameItem.time, defPref)
             val counterItem = "${shopListNameItem.checkItemCounter}/${shopListNameItem.countItem}"
             tvCounter.text = counterItem
             pBar.max = shopListNameItem.countItem

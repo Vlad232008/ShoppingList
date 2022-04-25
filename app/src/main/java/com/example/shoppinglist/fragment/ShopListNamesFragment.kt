@@ -69,7 +69,7 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
 
     private fun initRcView() = with(binding) {
         rcView.layoutManager = LinearLayoutManager(activity)
-        adapter = ShopListNameAdapter(this@ShopListNamesFragment)
+        adapter = ShopListNameAdapter(this@ShopListNamesFragment, defPref)
         rcView.adapter = adapter
     }
 
