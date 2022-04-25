@@ -13,14 +13,14 @@
     <string name="update">Обновить</string>
     <string name="nameTov">Наименование товара</string>
     <string name="update_name">Обновление названия</string>
-    <string name="general">General</string>
-    <string name="chose_note_style">Chose_note_style</string>
-    <string name="chose_time_style">Chose_time_style</string>
+    <string name="general">Главные</string>
+    <string name="chose_note_style">Стиль расстановки заметок</string>
+    <string name="chose_time_style">Формат времени</string>
     <string name="remove_ads">Remove ads</string>
     <string name="remove_ads_summary">Remove all ads from this app</string>
-    <string name="theme_setting">Theme setting</string>
-    <string name="chose_theme">Chose theme</string>
-    <string name="note_text_setting">Note text setting</string>
-    <string name="title_text_setting">Title text setting</string>
-    <string name="content_text_setting">Content text setting</string>
+    <string name="theme_setting">Настройка темы</string>
+    <string name="chose_theme">Выбор темы</string>
+    <string name="note_text_setting">Размер текста заметок</string>
+    <string name="title_text_setting">Размер текста темы</string>
+    <string name="content_text_setting">Размер текста заметки</string>
 </resources>

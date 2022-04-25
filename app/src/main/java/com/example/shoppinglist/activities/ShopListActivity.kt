@@ -41,6 +41,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         setTheme(getSelectedTheme())
         super.onCreate(savedInstanceState)
         binding = ActivityShopListBinding.inflate(layoutInflater)
+        binding.constLayout.setBackgroundResource(getBackground())
         setContentView(binding.root)
         init()
         initRcView()
@@ -49,10 +50,30 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     }
 
     private fun getSelectedTheme():Int{
-        return if(defPref.getString("theme_key", "red") == "red"){
-            R.style.Theme_ShoppingListLightRed
-        } else {
-            R.style.Theme_ShoppingListLightBlue
+        return when {
+            defPref.getString("theme_key", "red") == "red" -> {
+                R.style.Theme_ShoppingListLightRed
+            }
+            defPref.getString("theme_key", "blue") == "blue" -> {
+                R.style.Theme_ShoppingListLightBlue
+            }
+            else -> {
+                R.style.Theme_ShoppingListSun
+            }
+        }
+    }
+
+    private fun getBackground(): Int {
+        return when {
+            defPref.getString("theme_key", "red") == "red" -> {
+                R.drawable.ic_gradient_red_burgundy
+            }
+            defPref.getString("theme_key", "blue") == "blue" -> {
+                R.drawable.ic_gradient_cyan_blue
+            }
+            else -> {
+                R.drawable.ic_gradient_yellow_red
+            }
         }
     }
 
@@ -105,6 +126,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
                 )
             }
             android.R.id.home -> {
+                saveCountItems()
                 finish()
             }
         }

@@ -4,23 +4,21 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.preference.PreferenceManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
@@ -29,8 +27,7 @@ import com.example.shoppinglist.fragment.NoteFragment
 import com.example.shoppinglist.utils.HtmlManager
 import com.example.shoppinglist.utils.MyTouchListener
 import com.example.shoppinglist.utils.TimeManager.getCurrentTime
-import java.text.SimpleDateFormat
-import java.util.*
+
 
 class NewNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewNoteBinding
@@ -41,7 +38,7 @@ class NewNoteActivity : AppCompatActivity() {
         setTheme(getSelectedTheme())
         super.onCreate(savedInstanceState)
         binding = ActivityNewNoteBinding.inflate(layoutInflater)
-        //binding.constLayout.background = getBackground()
+        binding.constLayout.setBackgroundResource(getBackground())
         setContentView(binding.root)
         actionBarSetting()
         getNote()
@@ -52,23 +49,53 @@ class NewNoteActivity : AppCompatActivity() {
         actionMenuCallback()
     }
 
-    private fun getSelectedTheme():Int{
-        return if(defPref.getString("theme_key", "red") == "red"){
-            R.style.Theme_NewNoteLightRed
-        } else {
-            R.style.Theme_NewNoteLightBlue
+    private fun getSelectedTheme(): Int {
+        return when {
+            defPref.getString("theme_key", "red") == "red" -> {
+                R.style.Theme_NewNoteLightRed
+            }
+            defPref.getString("theme_key", "blue") == "blue" -> {
+                R.style.Theme_NewNoteLightBlue
+            }
+            else -> {
+                R.style.Theme_NewNoteSun
+            }
         }
     }
 
-    /*private fun getBackground():Drawable{
-        return if(defPref.getString("theme_key", "red") == "red"){
-            R.drawable.ic_gradient_red_burgundy.toDrawable()
-        } else {
-            R.drawable.ic_gradient_cyan_blue.toDrawable()
+    private fun getBackground(): Int {
+        return when {
+            defPref.getString("theme_key", "red") == "red" -> {
+                R.drawable.ic_gradient_red_burgundy
+            }
+            defPref.getString("theme_key", "blue") == "blue" -> {
+                R.drawable.ic_gradient_cyan_blue
+            }
+            else -> {
+                R.drawable.ic_gradient_yellow_red
+            }
         }
-    }*/
+    }
 
-    private fun onClickForceMenu() = with(binding){
+    private fun getImage() {
+        val photoPicker = Intent(Intent.ACTION_PICK)
+        photoPicker.type = "image/*"
+        startActivityForResult(photoPicker, PICK_IMAGE)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val url = data?.data
+        binding.idImage.setImageURI(url)
+        binding.idImage.visibility = View.VISIBLE
+    }
+
+    companion object {
+        const val PICK_IMAGE = 1
+    }
+
+    private fun onClickForceMenu() = with(binding) {
         binding.ibColor.setOnClickListener {
             if (binding.colorPicker.visibility == View.VISIBLE) {
                 closeColorPicker()
@@ -80,29 +107,34 @@ class NewNoteActivity : AppCompatActivity() {
         binding.ibBold.setOnClickListener {
             setBoldForceSelectedText()
         }
+        binding.ibImage.setOnClickListener {
+            getImage()
+        }
     }
-    private fun onClickColorPicker() = with(binding){
-        ibBlack.setOnClickListener{
+
+    private fun onClickColorPicker() = with(binding) {
+        ibBlack.setOnClickListener {
             setColorForceSelectedText(R.color.picker_black)
         }
-        ibRed.setOnClickListener{
+        ibRed.setOnClickListener {
             setColorForceSelectedText(R.color.picker_red)
         }
-        ibOrange.setOnClickListener{
+        ibOrange.setOnClickListener {
             setColorForceSelectedText(R.color.picker_orange)
         }
-        ibYellow.setOnClickListener{
+        ibYellow.setOnClickListener {
             setColorForceSelectedText(R.color.picker_yellow)
         }
-        ibGreen.setOnClickListener{
+        ibGreen.setOnClickListener {
             setColorForceSelectedText(R.color.picker_green)
         }
-        ibBlue.setOnClickListener{
+        ibBlue.setOnClickListener {
             setColorForceSelectedText(R.color.picker_blue)
         }
     }
+
     @SuppressLint("ClickableViewAccessibility")
-    private fun init(){
+    private fun init() {
         binding.colorPicker.setOnTouchListener(MyTouchListener())
     }
 
@@ -127,13 +159,12 @@ class NewNoteActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.id_save -> {
-                if (binding.idTitle.text.isEmpty()){
+                if (binding.idTitle.text.isEmpty()) {
                     val text = "Тема пуста!"
                     val duration = Toast.LENGTH_SHORT
                     val toast = Toast.makeText(applicationContext, text, duration)
                     toast.show()
-                }
-                else setMainResult()
+                } else setMainResult()
             }
             android.R.id.home -> {
                 finish()
@@ -167,19 +198,22 @@ class NewNoteActivity : AppCompatActivity() {
             idDescription.setSelection(startPos)
         }
     }
+
     private fun setColorForceSelectedText(colorId: Int) = with(binding) {
         val startPos = idDescription.selectionStart
         val endPos = idDescription.selectionEnd
         val styles = idDescription.text.getSpans(startPos, endPos, ForegroundColorSpan::class.java)
         if (styles.isNotEmpty()) idDescription.text.removeSpan(styles[0])
-            idDescription.text.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(this@NewNoteActivity, colorId)),
-                startPos,
-                endPos,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            idDescription.text.trim()
-            idDescription.setSelection(startPos)
+        idDescription.text.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(this@NewNoteActivity, colorId)),
+            startPos,
+            endPos,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        idDescription.text.trim()
+        idDescription.setSelection(startPos)
     }
+
     private fun setItalicForceSelectedText() = with(binding) {
         val startPos = idDescription.selectionStart
         val endPos = idDescription.selectionEnd
@@ -289,8 +323,9 @@ class NewNoteActivity : AppCompatActivity() {
         })
         binding.colorPicker.startAnimation(closeAnim)
     }
-    private fun actionMenuCallback(){
-        val actionMenuCallback = object: ActionMode.Callback{
+
+    private fun actionMenuCallback() {
+        val actionMenuCallback = object : ActionMode.Callback {
             override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
                 p1?.clear()
                 return true
@@ -312,12 +347,13 @@ class NewNoteActivity : AppCompatActivity() {
         binding.idDescription.customSelectionActionModeCallback = actionMenuCallback
     }
 
-    private fun setTextSize() = with(binding){
+    private fun setTextSize() = with(binding) {
         idTitle.setTextSize(defPref?.getString("title_size_key", "16"))
         idDescription.setTextSize(defPref?.getString("content_size_key", "14"))
     }
-    private fun EditText.setTextSize(size :String?){
-        if(size != null) this.textSize = size.toFloat()
+
+    private fun EditText.setTextSize(size: String?) {
+        if (size != null) this.textSize = size.toFloat()
     }
 
 }

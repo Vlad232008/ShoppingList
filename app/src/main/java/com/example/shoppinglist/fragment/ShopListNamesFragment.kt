@@ -1,13 +1,16 @@
 package com.example.shoppinglist.fragment
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.shoppinglist.R
 import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.activities.ShopListActivity
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
@@ -21,6 +24,7 @@ import com.example.shoppinglist.utils.TimeManager
 class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
     private lateinit var binding: FragmentShopListNamesBinding
     private lateinit var adapter: ShopListNameAdapter
+    private lateinit var defPref: SharedPreferences
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as MainApp).database)
@@ -51,7 +55,9 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        defPref = activity?.let { PreferenceManager.getDefaultSharedPreferences(it) }!!
         binding = FragmentShopListNamesBinding.inflate(inflater, container, false)
+        binding.frLayout.setBackgroundResource(getBackground())
         return binding.root
     }
 
@@ -86,13 +92,13 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
         })
     }
 
-    override fun editItem(shopListNameItem: ShopListNameItem) {
+    override fun editItem(nameItem: ShopListNameItem) {
         NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener {
             override fun onClick(name: String) {
-                mainViewModel.updateShopListName(shopListNameItem.copy(name = name))
+                mainViewModel.updateShopListName(nameItem.copy(name = name))
             }
 
-        }, shopListNameItem.name)
+        }, nameItem.name)
     }
 
     override fun onClickItem(nameItem: ShopListNameItem) {
@@ -100,5 +106,18 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
             putExtra(ShopListActivity.SHOP_LIST_NAME, nameItem)
         }
         startActivity(i)
+    }
+    private fun getBackground(): Int {
+        return when {
+            defPref.getString("theme_key", "red") == "red" -> {
+                R.drawable.ic_gradient_red_burgundy
+            }
+            defPref.getString("theme_key", "blue") == "blue" -> {
+                R.drawable.ic_gradient_cyan_blue
+            }
+            else -> {
+                R.drawable.ic_gradient_yellow_red
+            }
+        }
     }
 }

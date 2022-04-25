@@ -16,5 +16,5 @@ data class NoteItem(
     @ColumnInfo(name = "time")
     val time: String,
     @ColumnInfo(name = "category")
-    val categoty: String
+    val category: String
 ):Serializable

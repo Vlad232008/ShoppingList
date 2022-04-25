@@ -60,6 +60,5 @@ class NoteAdapter(private val listener: Listener, private val defPref: SharedPre
     interface Listener {
         fun deleteItem(id: Int)
         fun onClickItem(note: NoteItem)
-
     }
 }

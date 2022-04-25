@@ -22,6 +22,8 @@
     <color name="pink">#CA26FF</color>
     <color name="cyan">#52E5E7</color>
     <color name="dark_blue">#130CB7</color>
+    <color name="yellow">#FDD819</color>
+    <color name="back_red">#E80505</color>
 
 
 </resources>

@@ -19,26 +19,28 @@
     </string-array>
 
     <string-array name="chose_style_array">
-        <item>Red theme</item>
-        <item>Blue theme</item>
+        <item>Красная тема</item>
+        <item>Синяя тема</item>
+        <item>Солнце на пляже</item>
     </string-array>
     <string-array name="chose_style_values">
         <item>red</item>
         <item>blue</item>
+        <item>orange</item>
     </string-array>
 
     <string-array name="text_size_array">
         <item>12 sp</item>
-        <item>14 sp</item>
         <item>16 sp</item>
-        <item>18 sp</item>
         <item>20 sp</item>
+        <item>24 sp</item>
+        <item>72 sp</item>
     </string-array>
     <string-array name="text_size_values">
         <item>12</item>
-        <item>14</item>
         <item>16</item>
-        <item>18</item>
         <item>20</item>
+        <item>24</item>
+        <item>72</item>
     </string-array>
 </resources>

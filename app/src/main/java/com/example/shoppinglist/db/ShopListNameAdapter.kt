@@ -29,7 +29,7 @@ class ShopListNameAdapter(private val listener: Listener) :
             val counterItem = "${shopListNameItem.checkItemCounter}/${shopListNameItem.countItem}"
             tvCounter.text = counterItem
             pBar.max = shopListNameItem.countItem
-            pBar.progress =shopListNameItem.checkItemCounter
+            pBar.progress = shopListNameItem.checkItemCounter
             itemView.setOnClickListener {
                 listener.onClickItem(shopListNameItem)
             }

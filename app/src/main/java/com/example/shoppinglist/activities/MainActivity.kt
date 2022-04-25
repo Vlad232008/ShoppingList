@@ -2,13 +2,10 @@ package com.example.shoppinglist.activities
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.Window
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityMainBinding
@@ -17,7 +14,6 @@ import com.example.shoppinglist.fragment.FragmentManager
 import com.example.shoppinglist.fragment.NoteFragment
 import com.example.shoppinglist.fragment.ShopListNamesFragment
 import com.example.shoppinglist.setting.SettingActivity
-import com.example.shoppinglist.setting.SettingFragment
 
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     lateinit var binding: ActivityMainBinding
@@ -39,10 +35,16 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     }
 
     private fun getSelectedTheme():Int{
-        return if(defPref.getString("theme_key", "red") == "red"){
-            R.style.Theme_ShoppingListLightRed
-        } else {
-            R.style.Theme_ShoppingListLightBlue
+        return when {
+            defPref.getString("theme_key", "red") == "red" -> {
+                R.style.Theme_ShoppingListLightRed
+            }
+            defPref.getString("theme_key", "blue") == "blue" -> {
+                R.style.Theme_ShoppingListLightBlue
+            }
+            else -> {
+                R.style.Theme_ShoppingListSun
+            }
         }
     }
 

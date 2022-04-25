@@ -23,10 +23,16 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun getSelectedTheme(): Int{
-        return if(defPref.getString("theme_key", "red")=="red"){
-            R.style.Theme_ShoppingListLightRed
-        } else {
-            R.style.Theme_ShoppingListLightBlue
+        return when {
+            defPref.getString("theme_key", "red") == "red" -> {
+                R.style.Theme_ShoppingListLightRed
+            }
+            defPref.getString("theme_key", "blue") == "blue" -> {
+                R.style.Theme_ShoppingListLightBlue
+            }
+            else -> {
+                R.style.Theme_ShoppingListSun
+            }
         }
     }
 

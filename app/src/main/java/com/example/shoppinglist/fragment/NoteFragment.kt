@@ -17,6 +17,7 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.shoppinglist.R
 import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.activities.NewNoteActivity
 import com.example.shoppinglist.databinding.FragmentNoteBinding
@@ -63,6 +64,7 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
         }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRcView()
@@ -70,7 +72,8 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
     }
     private fun initRcView() = with(binding){
         defPref = activity?.let { PreferenceManager.getDefaultSharedPreferences(it) }!!
-        rcViewNote.layoutManager = LinearLayoutManager(activity)
+        binding.frLayout.setBackgroundResource(getBackground())
+        rcViewNote.layoutManager = getLayoutManager()
         adapter = NoteAdapter(this@NoteFragment, defPref)
         rcViewNote.adapter = adapter
     }
@@ -107,7 +110,20 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
                 NEW_NOTE_KEY,note
             )
         }
-
         editLauncher.launch(intent)
+    }
+
+    private fun getBackground(): Int {
+        return when {
+            defPref.getString("theme_key", "red") == "red" -> {
+                R.drawable.ic_gradient_red_burgundy
+            }
+            defPref.getString("theme_key", "blue") == "blue" -> {
+                R.drawable.ic_gradient_cyan_blue
+            }
+            else -> {
+                R.drawable.ic_gradient_yellow_red
+            }
+        }
     }
 }
