@@ -17,17 +17,13 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.adapter.ImageAdapter
-import com.example.shoppinglist.adapter.ShopListItemAdapter
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
-import com.example.shoppinglist.databinding.ImageListBinding
-import com.example.shoppinglist.db.MainViewModel
 import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.fragment.NoteFragment
 import com.example.shoppinglist.utils.HtmlManager
@@ -39,6 +35,7 @@ class NewNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewNoteBinding
     private var note: NoteItem? = null
     private lateinit var defPref: SharedPreferences
+    private lateinit var arrayImage: MutableList<Uri?>
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(getSelectedTheme())
@@ -49,7 +46,7 @@ class NewNoteActivity : AppCompatActivity() {
         actionBarSetting()
         getNote()
         init()
-        //initRcViewImage()
+        initRcViewImage()
         setTextSize()
         onClickColorPicker()
         onClickForceMenu()
@@ -94,7 +91,7 @@ class NewNoteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val url = data?.data
-        //arrayImage.add(url)
+        arrayImage.add(url)
         binding.idImage.setImageURI(url)
         binding.idImage.visibility = View.VISIBLE
     }
@@ -247,7 +244,7 @@ class NewNoteActivity : AppCompatActivity() {
         note?.copy(
             title = idTitle.text.toString(),
             content = HtmlManager.toHtml(idDescription.text).trim(),
-            //arrayImage = arrayImage
+            arrayImage = arrayImage
         )
     }
 
@@ -280,13 +277,14 @@ class NewNoteActivity : AppCompatActivity() {
             HtmlManager.toHtml(binding.idDescription.text).trim(),
             getCurrentTime(),
             "",
+            arrayImage
         )
     }
 
-    /*private fun initRcViewImage(){
+    private fun initRcViewImage(){
         binding.rcViewImage.layoutManager = LinearLayoutManager(this)
         binding.rcViewImage.adapter = ImageAdapter(arrayImage)
-    }*/
+    }
 
 
     //Открытие панели цветов

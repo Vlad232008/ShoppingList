@@ -18,4 +18,6 @@ data class NoteItem(
     val time: String,
     @ColumnInfo(name = "category")
     val category: String,
+    @ColumnInfo(name = "uri_image")
+    val arrayImage: MutableList<Uri?>
 ):Serializable
