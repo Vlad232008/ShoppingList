@@ -39,7 +39,6 @@ class NewNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewNoteBinding
     private var note: NoteItem? = null
     private lateinit var defPref: SharedPreferences
-    private val arrayImage:MutableList<Uri?> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(getSelectedTheme())
@@ -50,7 +49,7 @@ class NewNoteActivity : AppCompatActivity() {
         actionBarSetting()
         getNote()
         init()
-        initRcViewImage()
+        //initRcViewImage()
         setTextSize()
         onClickColorPicker()
         onClickForceMenu()
@@ -95,7 +94,7 @@ class NewNoteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val url = data?.data
-        arrayImage.add(url)
+        //arrayImage.add(url)
         binding.idImage.setImageURI(url)
         binding.idImage.visibility = View.VISIBLE
     }
@@ -248,7 +247,7 @@ class NewNoteActivity : AppCompatActivity() {
         note?.copy(
             title = idTitle.text.toString(),
             content = HtmlManager.toHtml(idDescription.text).trim(),
-            arrayImage = arrayImage
+            //arrayImage = arrayImage
         )
     }
 
@@ -281,14 +280,13 @@ class NewNoteActivity : AppCompatActivity() {
             HtmlManager.toHtml(binding.idDescription.text).trim(),
             getCurrentTime(),
             "",
-            arrayImage
         )
     }
 
-    private fun initRcViewImage(){
+    /*private fun initRcViewImage(){
         binding.rcViewImage.layoutManager = LinearLayoutManager(this)
         binding.rcViewImage.adapter = ImageAdapter(arrayImage)
-    }
+    }*/
 
 
     //Открытие панели цветов

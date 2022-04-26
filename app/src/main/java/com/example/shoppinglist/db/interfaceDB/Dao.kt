@@ -13,9 +13,6 @@ interface Dao {
     @Query("SELECT* From note_list")
     fun getAllNotes(): Flow<List<NoteItem>>
 
-    /*@Query("Select uri_image From note_list")
-    fun getArrayImage(id:Int)*/
-
     @Query("SELECT* From shopping_list_names")
     fun getAllShopListName(): Flow<List<ShopListNameItem>>
 
