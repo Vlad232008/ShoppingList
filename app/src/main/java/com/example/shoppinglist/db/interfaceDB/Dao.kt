@@ -58,3 +58,4 @@ interface Dao {
     @Update
     suspend fun updateShopListName(nameItem: ShopListNameItem)
 }
+

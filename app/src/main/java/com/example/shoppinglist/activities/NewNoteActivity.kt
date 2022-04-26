@@ -35,7 +35,7 @@ class NewNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewNoteBinding
     private var note: NoteItem? = null
     private lateinit var defPref: SharedPreferences
-    private lateinit var arrayImage: MutableList<Uri?>
+    private lateinit var arrayImage: MutableList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(getSelectedTheme())
@@ -91,7 +91,7 @@ class NewNoteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val url = data?.data
-        arrayImage.add(url)
+        arrayImage.add(url.toString())
         binding.idImage.setImageURI(url)
         binding.idImage.visibility = View.VISIBLE
     }

@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 
-class ImageAdapter(private val names: MutableList<Uri?>) : RecyclerView.Adapter<ImageAdapter.MyViewHolder>() {
+class ImageAdapter(private val names: MutableList<String>) : RecyclerView.Adapter<ImageAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imageView: ImageView = itemView.findViewById(R.id.imViewImage)
@@ -21,7 +22,7 @@ class ImageAdapter(private val names: MutableList<Uri?>) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.imageView.setImageURI(names[position])
+        holder.imageView.setImageURI(names[position].toUri())
     }
 
     override fun getItemCount() = names.size

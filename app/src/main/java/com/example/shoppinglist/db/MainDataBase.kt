@@ -4,14 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.shoppinglist.db.interfaceDB.Dao
-import com.example.shoppinglist.entities.LibraryItem
-import com.example.shoppinglist.entities.NoteItem
-import com.example.shoppinglist.entities.ShopListItem
-import com.example.shoppinglist.entities.ShopListNameItem
+import com.example.shoppinglist.entities.*
 
 @Database(entities = [LibraryItem::class, NoteItem::class,
     ShopListItem::class, ShopListNameItem::class], version = 1)
+@TypeConverters(Converter::class)
 abstract class MainDataBase:RoomDatabase() {
     abstract fun getDao(): Dao
 
