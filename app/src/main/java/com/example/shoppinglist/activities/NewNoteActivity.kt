@@ -46,7 +46,7 @@ class NewNoteActivity : AppCompatActivity() {
         actionBarSetting()
         getNote()
         init()
-        initRcViewImage()
+        //initRcViewImage()
         setTextSize()
         onClickColorPicker()
         onClickForceMenu()
@@ -91,7 +91,7 @@ class NewNoteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val url = data?.data
-        arrayImage.add(url.toString())
+        //arrayImage.add(url.toString())
         binding.idImage.setImageURI(url)
         binding.idImage.visibility = View.VISIBLE
     }
@@ -243,8 +243,8 @@ class NewNoteActivity : AppCompatActivity() {
     private fun updateNote(): NoteItem? = with(binding) {
         note?.copy(
             title = idTitle.text.toString(),
-            content = HtmlManager.toHtml(idDescription.text).trim(),
-            arrayImage = arrayImage
+            content = HtmlManager.toHtml(idDescription.text).trim()
+            //arrayImage = arrayImage
         )
     }
 
@@ -276,15 +276,15 @@ class NewNoteActivity : AppCompatActivity() {
             binding.idTitle.text.toString(),
             HtmlManager.toHtml(binding.idDescription.text).trim(),
             getCurrentTime(),
-            "",
-            arrayImage
+            ""
+            //arrayImage
         )
     }
 
-    private fun initRcViewImage(){
+    /*private fun initRcViewImage(){
         binding.rcViewImage.layoutManager = LinearLayoutManager(this)
         binding.rcViewImage.adapter = ImageAdapter(arrayImage)
-    }
+    }*/
 
 
     //Открытие панели цветов

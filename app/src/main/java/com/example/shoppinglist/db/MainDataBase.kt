@@ -10,7 +10,7 @@ import com.example.shoppinglist.entities.*
 
 @Database(entities = [LibraryItem::class, NoteItem::class,
     ShopListItem::class, ShopListNameItem::class], version = 1)
-@TypeConverters(Converter::class)
+//@TypeConverters(Converter::class)
 abstract class MainDataBase:RoomDatabase() {
     abstract fun getDao(): Dao
 
