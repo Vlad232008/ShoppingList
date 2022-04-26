@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
@@ -17,11 +17,17 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
+import com.example.shoppinglist.adapter.ImageAdapter
+import com.example.shoppinglist.adapter.ShopListItemAdapter
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
+import com.example.shoppinglist.databinding.ImageListBinding
+import com.example.shoppinglist.db.MainViewModel
 import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.fragment.NoteFragment
 import com.example.shoppinglist.utils.HtmlManager
@@ -33,6 +39,7 @@ class NewNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewNoteBinding
     private var note: NoteItem? = null
     private lateinit var defPref: SharedPreferences
+    private val arrayImage:MutableList<Uri?> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(getSelectedTheme())
@@ -43,6 +50,7 @@ class NewNoteActivity : AppCompatActivity() {
         actionBarSetting()
         getNote()
         init()
+        initRcViewImage()
         setTextSize()
         onClickColorPicker()
         onClickForceMenu()
@@ -77,7 +85,7 @@ class NewNoteActivity : AppCompatActivity() {
         }
     }
 
-    private fun getImage() {
+    private fun getImageLock() {
         val photoPicker = Intent(Intent.ACTION_PICK)
         photoPicker.type = "image/*"
         startActivityForResult(photoPicker, PICK_IMAGE)
@@ -87,6 +95,7 @@ class NewNoteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val url = data?.data
+        arrayImage.add(url)
         binding.idImage.setImageURI(url)
         binding.idImage.visibility = View.VISIBLE
     }
@@ -108,7 +117,7 @@ class NewNoteActivity : AppCompatActivity() {
             setBoldForceSelectedText()
         }
         binding.ibImage.setOnClickListener {
-            getImage()
+            getImageLock()
         }
     }
 
@@ -238,7 +247,8 @@ class NewNoteActivity : AppCompatActivity() {
     private fun updateNote(): NoteItem? = with(binding) {
         note?.copy(
             title = idTitle.text.toString(),
-            content = HtmlManager.toHtml(idDescription.text).trim()
+            content = HtmlManager.toHtml(idDescription.text).trim(),
+            arrayImage = arrayImage
         )
     }
 
@@ -270,9 +280,16 @@ class NewNoteActivity : AppCompatActivity() {
             binding.idTitle.text.toString(),
             HtmlManager.toHtml(binding.idDescription.text).trim(),
             getCurrentTime(),
-            ""
+            "",
+            arrayImage
         )
     }
+
+    private fun initRcViewImage(){
+        binding.rcViewImage.layoutManager = LinearLayoutManager(this)
+        binding.rcViewImage.adapter = ImageAdapter(arrayImage)
+    }
+
 
     //Открытие панели цветов
     private fun openActionMenu() {
@@ -348,12 +365,11 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
     private fun setTextSize() = with(binding) {
-        idTitle.setTextSize(defPref?.getString("title_size_key", "16"))
-        idDescription.setTextSize(defPref?.getString("content_size_key", "14"))
+        idTitle.setTextSize(defPref.getString("title_size_key", "16"))
+        idDescription.setTextSize(defPref.getString("content_size_key", "14"))
     }
 
     private fun EditText.setTextSize(size: String?) {
         if (size != null) this.textSize = size.toFloat()
     }
-
 }

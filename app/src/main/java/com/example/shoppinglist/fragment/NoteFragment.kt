@@ -4,13 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.preference.PreferenceManager
@@ -22,13 +19,13 @@ import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.activities.NewNoteActivity
 import com.example.shoppinglist.databinding.FragmentNoteBinding
 import com.example.shoppinglist.db.MainViewModel
-import com.example.shoppinglist.db.NoteAdapter
+import com.example.shoppinglist.adapter.NoteAdapter
 import com.example.shoppinglist.entities.NoteItem
 
 class NoteFragment : BaseFragment(), NoteAdapter.Listener {
     private lateinit var binding: FragmentNoteBinding
     private lateinit var editLauncher: ActivityResultLauncher<Intent>
-    private lateinit var adapter:NoteAdapter
+    private lateinit var adapter: NoteAdapter
     private lateinit var defPref:SharedPreferences
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as MainApp).database)

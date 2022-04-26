@@ -1,6 +1,5 @@
-package com.example.shoppinglist.db
+package com.example.shoppinglist.adapter
 
-import android.graphics.Color
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.LibraryListItemBinding
 import com.example.shoppinglist.databinding.ShopListItemBinding
-import com.example.shoppinglist.dialogs.EditListItemDialog
 import com.example.shoppinglist.entities.ShopListItem
 
 class ShopListItemAdapter(private val listener: Listener) :

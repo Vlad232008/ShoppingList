@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityShopListBinding
 import com.example.shoppinglist.db.MainViewModel
-import com.example.shoppinglist.db.ShopListItemAdapter
+import com.example.shoppinglist.adapter.ShopListItemAdapter
 import com.example.shoppinglist.dialogs.EditListItemDialog
 import com.example.shoppinglist.entities.LibraryItem
 import com.example.shoppinglist.entities.ShopListItem

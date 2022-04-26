@@ -1,4 +1,4 @@
-package com.example.shoppinglist.db
+package com.example.shoppinglist.adapter
 
 import android.content.SharedPreferences
 import android.view.LayoutInflater

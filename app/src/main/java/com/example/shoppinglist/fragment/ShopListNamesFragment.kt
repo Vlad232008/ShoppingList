@@ -15,7 +15,7 @@ import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.activities.ShopListActivity
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.example.shoppinglist.db.MainViewModel
-import com.example.shoppinglist.db.ShopListNameAdapter
+import com.example.shoppinglist.adapter.ShopListNameAdapter
 import com.example.shoppinglist.dialogs.DeleteDialog
 import com.example.shoppinglist.dialogs.NewListDialog
 import com.example.shoppinglist.entities.ShopListNameItem

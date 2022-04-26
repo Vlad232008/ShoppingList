@@ -1,5 +1,6 @@
 package com.example.shoppinglist.entities
 
+import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -16,5 +17,7 @@ data class NoteItem(
     @ColumnInfo(name = "time")
     val time: String,
     @ColumnInfo(name = "category")
-    val category: String
+    val category: String,
+    @ColumnInfo(name = "uri_image")
+    val arrayImage: MutableList<Uri?>
 ):Serializable
