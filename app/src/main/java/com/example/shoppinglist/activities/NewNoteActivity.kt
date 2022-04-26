@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
@@ -20,9 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
-import com.example.shoppinglist.adapter.ImageAdapter
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
 import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.fragment.NoteFragment
@@ -35,7 +32,7 @@ class NewNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewNoteBinding
     private var note: NoteItem? = null
     private lateinit var defPref: SharedPreferences
-    private lateinit var arrayImage: MutableList<String>
+    //private lateinit var arrayImage: MutableList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(getSelectedTheme())

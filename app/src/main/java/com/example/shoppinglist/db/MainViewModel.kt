@@ -12,6 +12,7 @@ class MainViewModel(database: MainDataBase):ViewModel() {
     val dao = database.getDao()
 
     val libraryItems = MutableLiveData<List<LibraryItem>>()
+
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
 
     val allShopListNameItem: LiveData<List<ShopListNameItem>> = dao.getAllShopListName().asLiveData()
