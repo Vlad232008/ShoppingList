@@ -15,11 +15,13 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout.HORIZONTAL
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +42,7 @@ class NewNoteActivity : AppCompatActivity(), ImageAdapter.Listener{
     private lateinit var defPref: SharedPreferences
     private var arrayImage: MutableList<String> = mutableListOf()
     private lateinit var adapter: ImageAdapter
+    private val bigImage: ImageView = findViewById(R.id.imBigImage)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -55,6 +58,9 @@ class NewNoteActivity : AppCompatActivity(), ImageAdapter.Listener{
         onClickColorPicker()
         onClickForceMenu()
         actionMenuCallback()
+        bigImage.setOnClickListener {
+            bigImage.visibility = View.GONE
+        }
     }
 
     override fun onResume() {
@@ -386,10 +392,8 @@ class NewNoteActivity : AppCompatActivity(), ImageAdapter.Listener{
         arrayImage.removeAt(id)
         initRcViewImage()
     }
-    override fun onClickItem(position: Int) {
-        val text = "$position!"
-        val duration = Toast.LENGTH_SHORT
-        val toast = Toast.makeText(applicationContext, text, duration)
-        toast.show()
+    override fun onClickItem(position: Int)= with(binding) {
+        bigImage.visibility = View.VISIBLE
+        imBigImage.setImageURI(arrayImage[position].toUri())
     }
 }
