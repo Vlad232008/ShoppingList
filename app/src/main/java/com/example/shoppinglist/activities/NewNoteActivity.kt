@@ -292,7 +292,7 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
     private fun initRcViewImage(){
-        binding.rcViewImage.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
+        binding.rcViewImage.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcViewImage.adapter = ImageAdapter(arrayImage)
         if (arrayImage.isNotEmpty()){
             binding.rcViewImage.visibility = View.VISIBLE
