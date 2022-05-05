@@ -76,8 +76,6 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         super.onResume()
         binding.bNav.selectedItemId = currentMenuItemId
         if (defPref.getString("theme_key", "red") != currentTheme) recreate()
-
-
     }
 
     override fun onClick(name: String) {

@@ -15,12 +15,18 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.LinearLayout.HORIZONTAL
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
+import com.example.shoppinglist.adapter.ImageAdapter
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
+import com.example.shoppinglist.db.MainViewModel
 import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.fragment.NoteFragment
 import com.example.shoppinglist.utils.HtmlManager
@@ -32,7 +38,9 @@ class NewNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewNoteBinding
     private var note: NoteItem? = null
     private lateinit var defPref: SharedPreferences
-    //private lateinit var arrayImage: MutableList<String>
+    private var arrayImage: MutableList<String> = mutableListOf()
+    private lateinit var adapter: ImageAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(getSelectedTheme())
@@ -43,11 +51,15 @@ class NewNoteActivity : AppCompatActivity() {
         actionBarSetting()
         getNote()
         init()
-        //initRcViewImage()
         setTextSize()
         onClickColorPicker()
         onClickForceMenu()
         actionMenuCallback()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initRcViewImage()
     }
 
     private fun getSelectedTheme(): Int {
@@ -88,10 +100,10 @@ class NewNoteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val url = data?.data
-        //arrayImage.add(url.toString())
-        binding.idImage.setImageURI(url)
-        binding.idImage.visibility = View.VISIBLE
+        val urlString = url.toString()
+        arrayImage.add(urlString)
     }
+
 
     companion object {
         const val PICK_IMAGE = 1
@@ -151,6 +163,7 @@ class NewNoteActivity : AppCompatActivity() {
     private fun fillNote() = with(binding) {
         idTitle.setText(note?.title)
         idDescription.setText(HtmlManager.getFromHtml(note?.content!!).trim())
+        arrayImage = note?.arrayImage!!
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -185,7 +198,7 @@ class NewNoteActivity : AppCompatActivity() {
         val endPos = idDescription.selectionEnd
 
         val styles = idDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
-        var boldStyle: StyleSpan? = null
+        val boldStyle: StyleSpan?
         if (styles.isNotEmpty()) {
             idDescription.text.removeSpan(styles[0])
         } else {
@@ -221,7 +234,7 @@ class NewNoteActivity : AppCompatActivity() {
         val endPos = idDescription.selectionEnd
 
         val styles = idDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
-        var italicStyle: StyleSpan? = null
+        val italicStyle: StyleSpan?
         if (styles.isNotEmpty()) {
             idDescription.text.removeSpan(styles[0])
         } else {
@@ -240,8 +253,8 @@ class NewNoteActivity : AppCompatActivity() {
     private fun updateNote(): NoteItem? = with(binding) {
         note?.copy(
             title = idTitle.text.toString(),
-            content = HtmlManager.toHtml(idDescription.text).trim()
-            //arrayImage = arrayImage
+            content = HtmlManager.toHtml(idDescription.text).trim(),
+            arrayImage = arrayImage
         )
     }
 
@@ -273,16 +286,19 @@ class NewNoteActivity : AppCompatActivity() {
             binding.idTitle.text.toString(),
             HtmlManager.toHtml(binding.idDescription.text).trim(),
             getCurrentTime(),
-            ""
-            //arrayImage
+            "",
+            arrayImage
         )
     }
 
-    /*private fun initRcViewImage(){
-        binding.rcViewImage.layoutManager = LinearLayoutManager(this)
+    private fun initRcViewImage(){
+        binding.rcViewImage.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
         binding.rcViewImage.adapter = ImageAdapter(arrayImage)
-    }*/
-
+        if (arrayImage.isNotEmpty()){
+            binding.rcViewImage.visibility = View.VISIBLE
+        }
+        else binding.rcViewImage.visibility = View.GONE
+    }
 
     //Открытие панели цветов
     private fun openActionMenu() {
