@@ -34,7 +34,7 @@ import com.example.shoppinglist.utils.MyTouchListener
 import com.example.shoppinglist.utils.TimeManager.getCurrentTime
 
 
-class NewNoteActivity : AppCompatActivity(){
+class NewNoteActivity : AppCompatActivity(), ImageAdapter.Listener{
     private lateinit var binding: ActivityNewNoteBinding
     private var note: NoteItem? = null
     private lateinit var defPref: SharedPreferences
@@ -293,7 +293,7 @@ class NewNoteActivity : AppCompatActivity(){
 
     private fun initRcViewImage(){
         binding.rcViewImage.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rcViewImage.adapter = ImageAdapter(arrayImage)
+        binding.rcViewImage.adapter = ImageAdapter(this, arrayImage)
         if (arrayImage.isNotEmpty()){
             binding.rcViewImage.visibility = View.VISIBLE
         }
@@ -382,14 +382,14 @@ class NewNoteActivity : AppCompatActivity(){
         if (size != null) this.textSize = size.toFloat()
     }
 
-    /*override fun deleteItem(id: Int) {
+    override fun deleteItem(id: Int) {
         arrayImage.removeAt(id)
+        initRcViewImage()
     }
-
     override fun onClickItem(position: Int) {
         val text = "$position!"
         val duration = Toast.LENGTH_SHORT
         val toast = Toast.makeText(applicationContext, text, duration)
         toast.show()
-    }*/
+    }
 }
