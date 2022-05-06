@@ -41,8 +41,6 @@ class NewNoteActivity : AppCompatActivity(), ImageAdapter.Listener{
     private var note: NoteItem? = null
     private lateinit var defPref: SharedPreferences
     private var arrayImage: MutableList<String> = mutableListOf()
-    private lateinit var adapter: ImageAdapter
-    private val bigImage: ImageView = findViewById(R.id.imBigImage)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -58,6 +56,7 @@ class NewNoteActivity : AppCompatActivity(), ImageAdapter.Listener{
         onClickColorPicker()
         onClickForceMenu()
         actionMenuCallback()
+        val bigImage: ImageView = findViewById(R.id.imBigImage)
         bigImage.setOnClickListener {
             bigImage.visibility = View.GONE
         }
@@ -393,7 +392,7 @@ class NewNoteActivity : AppCompatActivity(), ImageAdapter.Listener{
         initRcViewImage()
     }
     override fun onClickItem(position: Int)= with(binding) {
-        bigImage.visibility = View.VISIBLE
+        imBigImage.visibility = View.VISIBLE
         imBigImage.setImageURI(arrayImage[position].toUri())
     }
 }
