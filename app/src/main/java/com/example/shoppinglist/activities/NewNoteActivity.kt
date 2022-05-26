@@ -15,20 +15,15 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout.HORIZONTAL
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.adapter.ImageAdapter
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
-import com.example.shoppinglist.db.MainViewModel
+import com.example.shoppinglist.dialogs.ImageDialog
 import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.fragment.NoteFragment
 import com.example.shoppinglist.utils.HtmlManager
@@ -56,10 +51,6 @@ class NewNoteActivity : AppCompatActivity(), ImageAdapter.Listener{
         onClickColorPicker()
         onClickForceMenu()
         actionMenuCallback()
-        val bigImage: ImageView = findViewById(R.id.imBigImage)
-        bigImage.setOnClickListener {
-            bigImage.visibility = View.GONE
-        }
     }
 
     override fun onResume() {
@@ -100,11 +91,10 @@ class NewNoteActivity : AppCompatActivity(), ImageAdapter.Listener{
         photoPicker.type = "image/*"
         startActivityForResult(photoPicker, PICK_IMAGE)
     }
-
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val url = data?.data
+        val url = data?.data ?: return
         val urlString = url.toString()
         arrayImage.add(urlString)
     }
@@ -391,8 +381,7 @@ class NewNoteActivity : AppCompatActivity(), ImageAdapter.Listener{
         arrayImage.removeAt(id)
         initRcViewImage()
     }
-    override fun onClickItem(position: Int)= with(binding) {
-        imBigImage.visibility = View.VISIBLE
-        imBigImage.setImageURI(arrayImage[position].toUri())
+    override fun onClickItem(position: Int) {
+        ImageDialog.showDialog(this, arrayImage[position])
     }
 }

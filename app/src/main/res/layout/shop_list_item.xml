@@ -24,12 +24,12 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
                 android:text="TextView"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imEdit"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,18 +54,18 @@
                 android:id="@+id/cBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/imEdit"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/imEdit" />
 
             <ImageView
                 android:id="@+id/imEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/cBox"
+                app:layout_constraintBottom_toBottomOf="@+id/tvName"
                 app:layout_constraintEnd_toStartOf="@+id/cBox"
-                app:layout_constraintTop_toTopOf="@+id/cBox"
+                app:layout_constraintTop_toTopOf="@+id/tvName"
                 app:srcCompat="@drawable/ic_baseline_edit_library_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
